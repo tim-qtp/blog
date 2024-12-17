@@ -3,7 +3,7 @@ import theme from './theme.js'
 import { searchProPlugin } from 'vuepress-plugin-search-pro'
 
 export default defineUserConfig({
-  base: '/QtpBlog/',
+  base: '/blog/',
   // 设置正在使用的语言
   lang: 'zh-CN',
   // 设置网站标题
