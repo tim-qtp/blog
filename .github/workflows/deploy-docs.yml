@@ -35,10 +35,10 @@ jobs:
 
       - name: 👷部署文档
         uses: JamesIves/github-pages-deploy-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.SCCESS_TOKEN }}
         with:
           # 这是文档部署到的分支名称
           branch: blog-pages
           folder: src/.vuepress/dist
-        env:
-          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
-          GITHUB_TOKEN: ${{ secrets.SCCESS_TOKEN }}
+
