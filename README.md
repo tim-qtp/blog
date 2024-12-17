@@ -1,11 +1,12 @@
 <div align="center">
- <!-- <img width="180px" src="src/.vuepress/public/logo.png"> -->
-    <!-- <p/> -->
+ <img width="180px" src="src/.vuepress/public/logo.png">
+    <p/>
  <h1>『Qtp-稳重不爱吃肉』</h1>
 </div>
 
 :rocket: 无限进步，影视飓风的座右铭！也是我的！
 :rocket: 做技术的应该多写点技术文章，输出的同时倒逼输入！
+
 :fire: :fire: :fire: 推荐 | 在线阅读：<https://tim-qtp.github.io/blog/>
 
 ## :milky_way:标志说明
@@ -20,4 +21,4 @@
 | :---------: | :-------------------------: | :-------------------: | :------------------: | :------------------: | :------------------------: |
 | [🦀](#Rust) | [:baby_chick:](#Foundation) | [:tiger:](#Interview) | [:ocean:](#Frontend) |  [:mouse:](#golang)  |     [:coffee:](#java)      |
 
-<img align="right" alt="GIF" src="src/.vuepress/public/code.gif" width="343" height="220" title="Do what you like, and do it best!"> &nbsp;
+<img align="left" alt="GIF" src="src/.vuepress/public/code.gif" width="400" height="280" title="Do what you like, and do it best!"> &nbsp;
