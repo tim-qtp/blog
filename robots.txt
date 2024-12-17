@@ -1,0 +1,5 @@
+
+User-agent:*
+Disallow:
+
+Sitemap: https://tim-qtp.github.io/blog/blog/sitemap.xml
