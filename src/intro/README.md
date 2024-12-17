@@ -1,7 +1,7 @@
 ---
 order: 1
-author: zhiyu1998
-title: CSLN导读
+author: Qintp
+title: Qtp笔记
 category:
   - 开篇
   - 导读
