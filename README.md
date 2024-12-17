@@ -21,4 +21,4 @@
 | :---------: | :-------------------------: | :-------------------: | :------------------: | :------------------: | :------------------------: |
 | [🦀](#Rust) | [:baby_chick:](#Foundation) | [:tiger:](#Interview) | [:ocean:](#Frontend) |  [:mouse:](#golang)  |     [:coffee:](#java)      |
 
-<img align="left" alt="GIF" src="src/.vuepress/public/code.gif" width="400" height="280" title="Do what you like, and do it best!"> &nbsp;
+<img align="" alt="GIF" src="src/.vuepress/public/code.gif" width="450" height="288" title="Do what you like, and do it best!"> &nbsp;
