@@ -22,9 +22,4 @@ export const zhNavbar = navbar([
   //     },
   //   ],
   // },
-  // {
-  //   text: '问题反馈',
-  //   icon: 'note',
-  //   link: 'https://github.com/zhiyu1998/Computer-Science-Learn-Notes/issues',
-  // },
 ])
