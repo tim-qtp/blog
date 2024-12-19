@@ -5,9 +5,38 @@ export const zhSidebar = sidebar({
     {
       icon: "build",
       text: "一、计算机基础",
-      prefix: "fundamental",
-      children: "structure",
       collapsible: true,
+      prefix: "fundamental/",
+      children: [
+        {
+          icon: "activity",
+          text: "计网",
+          prefix: "network/",
+          children: "structure",
+          collapsible: true,
+        },
+        {
+          icon: "branch",
+          text: "操作系统",
+          prefix: "operating_system/",
+          children: "structure",
+          collapsible: true,
+        },
+        {
+          icon: "profile",
+          text: "设计模式",
+          prefix: "design_atterns/",
+          children: "structure",
+          collapsible: true,
+        },
+        {
+          icon: "leaf",
+          text: "linux",
+          prefix: "linux/",
+          children: "structure",
+          collapsible: true,
+        }
+      ]
     },
     {
       icon: "vscode",

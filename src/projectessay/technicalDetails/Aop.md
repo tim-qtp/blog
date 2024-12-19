@@ -159,5 +159,3 @@ public class MainApp {
 
 - **实际用途**：在业务逻辑复杂、需要触发切面增强的内部方法调用时，这是非常有用的。通过 `exposeProxy = true` 暴露代理对象，然后使用 `AopContext.currentProxy()` 获取当前代理对象，这样调用方法时就能触发切面逻辑。
 
-![image-20241219135342304](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241219135342304.png)
-
