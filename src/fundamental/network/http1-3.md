@@ -12,7 +12,7 @@ category:
 
 - HTTP/1.0 为短连接，每次请求都需要建⽴⼀个**昂贵的**TCP连接。HTTP/1.1 支持长连接。⼀个TCP连接上可以传送多个HTTP请求和响应，默认开启 `Connection:Keep-Alive`
 
-- 增加pipline管道，无需等待前面的请求响应，即可发送第二次请求，但是响应必须按照请求发出的顺序返回，存在队头阻塞问题。所以后面2.0从浏览器中就移除了。`所以现在浏览器一般是与服务器爆出多个TCP连接`
+- 增加pipline管道，无需等待前面的请求响应，即可发送第二次请求，但是响应必须按照请求发出的顺序返回，存在队头阻塞问题。所以后面2.0从浏览器中就移除了。`所以现在浏览器一般是与服务器建立多个TCP连接`
 
   ![目前浏览器的TCP连接方式](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241219150225816.png)
 
@@ -53,7 +53,9 @@ category:
 
 ![建立连接更快](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241219154755123.png)
 
-速度快，低延迟，也更安全。以前需要3个RTT，现在 0-RTT 或者 1-RTT。
+速度快，低延迟。以前需要3个RTT，现在 0-RTT 或者 1-RTT。
+
+同样也更安全，HTTP 2可以使用TLS加密（HTTPS）。但加密并非强制要求。HTTP三默认使用QUIC自带的TLS1.3加密。安全性更高，且加密是强制的。
 
 ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241219171318249.png)
 
