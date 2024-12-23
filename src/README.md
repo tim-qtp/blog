@@ -11,7 +11,7 @@ actions:
     type: primary
 
   - text: 关于我
-    link: /intro
+    link: /about/
 
 features:
   - title: 计算机基础
@@ -34,10 +34,6 @@ features:
     details: 准备好，全面进阶；大厂面试，挑战不止，成功仅在一念之间
     link: /java/eightpart/foundation
 
-  - title: Golang
-    icon: emmet
-    details: Golang是一种快速、高效、强类型的编程语言，适用于云、网络、分布式系统等领域
-    link: /golang/learnInProblem
 
   - title: 工作总结
     icon: info
@@ -49,5 +45,5 @@ features:
     details: 推荐一些个人经常使用的插件、网页、开源项目等
     link: /others/rent_house
 copyright: false
-footer: 使用 <a href="https://github.com/vuepress-theme-hope/vuepress-theme-hope" target="_blank">Github © 2025 VuePress Theme Hope</a> MIT 协议, 版权所有 © 2025-present Qtp
+footer: 使用 <a href="https://github.com/vuepress-theme-hope/vuepress-theme-hope" target="_blank">Github © VuePress Theme Hope</a> 主题 | MIT 协议 | 版权所有 © 2024-present Qtp
 ---

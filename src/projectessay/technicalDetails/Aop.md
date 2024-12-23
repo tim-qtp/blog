@@ -13,7 +13,7 @@ category:
 ## 🍂 智能协同云图库
 
 
-#### @EnableAspectJAutoProxy(exposeProxy = true)有什么用？
+#### @EnableAspectJAutoProxy(exposePro xy = true)有什么用？
 
 它是启用基于AspectJ的 AOP 功能的意思,它会告诉 Spring 使用代理来处理带有 AOP 注解的类。
  * 默认情况下，Spring 创建的代理对象是不可直接访问的，因为它是在 Spring 容器中管理的对象。

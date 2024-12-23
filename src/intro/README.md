@@ -1,6 +1,6 @@
 ---
 order: 1
-author: Qintp
+author: 
 title: Qtp笔记
 category:
   - 开篇

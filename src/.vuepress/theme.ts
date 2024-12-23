@@ -10,7 +10,9 @@ export default hopeTheme({
     url: 'https://github.com/tim-qtp/',
   },
 
-  iconAssets: 'iconfont',
+  // iconAssets: 'iconfont',
+  iconAssets: '//at.alicdn.com/t/c/font_4791007_2cui404f6up.css',
+  
 
   logo: '/logo.svg',
 
