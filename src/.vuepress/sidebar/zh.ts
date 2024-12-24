@@ -219,7 +219,7 @@ export const zhSidebar = sidebar({
         {
           icon: "rocket",
           text: "经验教训",
-          prefix: "eightpart",
+          prefix: "lessonsLearned",
           children: "structure",
           collapsible: true,
         },
