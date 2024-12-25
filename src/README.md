@@ -2,7 +2,7 @@
 home: true
 icon: home
 title: 主页
-heroImage: /logo.png
+heroImage: /照相机-2.png
 heroText: QTP Tim
 tagline: Tim：有人说你可以不懂摄影，但一定要记录生活，你拍的不好没有关系，没有记录下来才是最可惜的一点，因为很多事情过后，已经不能凭空想象起来了，当按下快门的那一刻，时间就停在了这里，影像的意义，在于把尽心的瞬间变成一个永恒，当你回看的时候，回忆起当时的心情，他会比让这段回忆变得更加具体，也更加鲜活一些。
 actions:
