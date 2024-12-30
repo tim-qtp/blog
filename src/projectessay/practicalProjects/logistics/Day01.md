@@ -353,7 +353,7 @@ server {
 
 推送成功：
 
-![](C:/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20241228111555997.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241228111555997.png)
 
 推送完成后，==一般情况需要将feature分支删除掉，不推送到远程仓库==。
 
