@@ -1118,3 +1118,76 @@ OSGi还使用类加载器实现了热部署的功能。热部署指的是在服�
 ![类加载器的作用](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241225212600327.png)
 
 ![双亲委派](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241225212759021.png)
+
+
+
+## 运行时数据区？
+
+![image61](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image61.png)
+
+#### **程序计数器**
+
+也叫PC寄存器，**每个线程**会通过程序计数器记录当前要执行的的字节码指令的地址。
+
+实现分支，跳转，异常等逻辑。
+
+在多线程执行情况下，Java虚拟机需要通过程序计数器记录CPU切换前解释执行到那一句指令并继续解释运行。
+
+![image60](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image60.png)
+
+#### **程序计数器会出现内存溢出吗？**
+
+不会，程序计数器只会保存==固定长度==的内存地址。
+
+#### **Java虚拟机栈**
+
+虚拟机栈中保存在java中实现的方法，每次执行方法，都会往栈里去保存。先进后出。
+
+```java
+package chapter03.frame;
+
+/**
+ * 栈帧测试1
+ */
+public class FrameDemo {
+    public static void main(String[] args) {
+        A();
+    }
+
+    public static void A() {
+        System.out.println("A执行了...");
+        B();
+    }
+
+    public static void B() {
+        System.out.println("B执行了...");
+        C();
+    }
+
+    public static void C() {
+        System.out.println("C执行了...");
+        throw new RuntimeException("测试");
+    }
+}
+```
+
+打上断点debug之后会出现栈帧内容：
+
+<img src="https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image62.png" style="zoom:50%;" />
+
+在最后一个方法后抛出异常，也可以观测到：
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241226152900536.png)
+
+
+
+
+
+
+
+
+
+
+
+
+

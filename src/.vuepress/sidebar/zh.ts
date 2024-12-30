@@ -112,7 +112,7 @@ export const zhSidebar = sidebar({
     // },
     {
       icon: "framework",
-      text: "四、框架",
+      text: "五、框架",
       collapsible: true,
       prefix: "framework/",
       children: [
@@ -131,6 +131,13 @@ export const zhSidebar = sidebar({
           collapsible: true,
         },
         {
+          icon: "springcloud",
+          text: "SpringCloud",
+          prefix: "springcloud/",
+          children: "structure",
+          collapsible: true,
+        },
+        {
           icon: "mybatis",
           text: "MyBatis",
           prefix: "mybatis/",
@@ -141,10 +148,17 @@ export const zhSidebar = sidebar({
     },
     {
       icon: "microservices",
-      text: "五、微服务中间件",
+      text: "六、微服务中间件",
       collapsible: true,
       prefix: "microservices/",
       children: [
+        {
+          icon: "docker",
+          text: "Docker",
+          prefix: "docker/",
+          children: "structure", 
+          collapsible: true,
+        },
         {
           icon: "nacos",
           text: "Nacos",
@@ -186,19 +200,19 @@ export const zhSidebar = sidebar({
           prefix: "hystrix/",
           children: "structure", 
           collapsible: true,
-        },
+        }
       ]
     },
     {
       icon: "interview",
-      text: "五、面试",
+      text: "七、面试",
       prefix: "interview/",
       children: "structure",
       collapsible: true,
     },
     {
       icon: "essay",
-      text: "六、项目随笔",
+      text: "八、项目随笔",
       prefix: "projectessay/",
       collapsible: true,
       children: [
@@ -209,6 +223,56 @@ export const zhSidebar = sidebar({
           children: "structure",
           collapsible: true,
         },
+        {
+          icon: "project3",
+          text: "实战项目",
+          prefix: "practicalProjects/",
+          collapsible: true,
+          children: [
+            {
+              icon: "shortlink",
+              text: "短链接",
+              prefix: "shortlink",
+              children: "structure",
+              collapsible: true,
+            },
+            {
+              icon: "imageLibrary",
+              text: "智能图库",
+              prefix: "imageLibrary",
+              children: "structure",
+              collapsible: true,
+            },
+            {
+              icon: "logistics",
+              text: "神领物流",
+              prefix: "logistics",
+              children: "structure",
+              collapsible: true,
+            },
+            {
+              icon: "oj",
+              text: "刷题OJ平台",
+              prefix: "oj",
+              children: "structure",
+              collapsible: true,
+            },
+            {
+              icon: "onlineEducation",
+              text: "学成在线",
+              prefix: "onlineEducation",
+              children: "structure",
+              collapsible: true,
+            },
+            {
+              icon: "flashSale",
+              text: "秒杀系统",
+              prefix: "flashSale",
+              children: "structure",
+              collapsible: true,
+            } 
+          ],
+        },        
         {
           icon: "bug",
           text: "bug修复",
@@ -234,7 +298,7 @@ export const zhSidebar = sidebar({
     },
     {
       icon: "github",
-      text: "七、开源推荐",
+      text: "九、开源推荐",
       prefix: "opensource/",
       children: "structure",
       collapsible: true,
@@ -242,8 +306,8 @@ export const zhSidebar = sidebar({
   ],
   "/life/": [
     {
-      icon: "vscode",
-      text: "二、神龟",
+      icon: "java",
+      text: "一、碎嘴",
       prefix: "life",
       children: "structure",
       collapsible: true,
