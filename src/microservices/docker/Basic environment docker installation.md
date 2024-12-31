@@ -10,7 +10,7 @@ category:
 
 ## Redis安装
 
-- 下载Redis`7`的docker镜像：
+- 下载Redis`7`的docker镜像：  
 
 ```sh
 docker pull redis:7

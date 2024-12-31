@@ -3,7 +3,7 @@
     <p/>
  <h1>『Qtp-稳重不爱吃肉』</h1>
 </div>
-:rocket: 无限进步，影视飓风的座右铭！
+:rocket: 无限进步，影视飓风的座右铭！  
 :rocket: 做技术的应该多写点技术文章，输出的同时倒逼输入！
 
 :fire: :fire: :fire: 推荐 | 在线阅读：<https://tim-qtp.github.io/blog/>

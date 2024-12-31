@@ -404,6 +404,18 @@ eureka:
 > spring会自动帮助我们从eureka-server端，根据userservice这个服务名称，获取实例列表，而后完成负载均衡.
 >
 > 注意如果不加 @LoadBalanced ，将无法通过服务名请求访问
+>
+> 注意：是在这加：
+>
+> ```java
+> /**
+>  * 创建RestTemplate并注入Spring容器
+>  */
+> @Bean
+> public RestTemplate restTemplate(){
+>     return new RestTemplate();
+> }
+> ```
 
 切换两个实例查看，发现确实实现了负载均衡**（这个课太棒了！）**
 
@@ -430,6 +442,8 @@ eureka:
 - 在application.yml中配置eureka地址
 - 给RestTemplate添加@LoadBalanced注解
 - 用服务提供者的服务名称远程调用
+
+
 
 ## 四、Ribbon负载均衡
 
@@ -465,7 +479,7 @@ SpringCloud底层其实是利用了一个名为Ribbon的组件，来实现负载
 
 这里的`this.loadBalancer`是`LoadBalancerClient`类型，我们继续跟入。
 
-
+ 
 
 **2）LoadBalancerClient**
 
@@ -498,7 +512,7 @@ SpringCloud底层其实是利用了一个名为Ribbon的组件，来实现负载
 
 ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/a6675c34e11a186cbc0a57bda461c364.png)
 
-继续跟踪源码chooseServer方法，发现这么一段代码：
+继续跟踪源码chooseServer方法，发现这么一段代码： 
 
  ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/b696a05f4f6a57719ea0b88c29046f89.png)
 
@@ -576,7 +590,7 @@ public IRule randomRule(){
 }
 ```
 
-
+上面这个是全局的，在`order-service`里，不管你调用的是`user-service`，还是以后商品服务也好，它都是随机的。
 
 2. 配置文件方式：在order-service的application.yml文件中，添加新的配置也可以修改规则：
 
@@ -667,7 +681,7 @@ Nacos是SpringCloudAlibaba的组件，而SpringCloudAlibaba也遵循SpringCloud�
 - 依赖不同
 - 服务地址不同
 
-
+![image-20241231121817181](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241231121817181.png)
 
 ##### 1）引入依赖
 
