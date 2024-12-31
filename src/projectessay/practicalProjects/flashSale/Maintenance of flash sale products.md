@@ -6,7 +6,6 @@ category:
   - 秒杀系统
   - 项目
 
-
 ---
 
 ## 1 秒杀设计
@@ -280,6 +279,20 @@ CREATE TABLE `tb_address` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
+其中最重要的就是秒杀商品表了：tb_sku
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241231202400064.png)
+
+商品状态：是看商品是否参与秒杀
+
+是否锁定：会进行热点数据的实时分析，对分析出来的热点商品进行隔离操作，非热点数据-非锁定，热点数据-锁定。而且后面会进行热点和非热点的隔离下单，那么也需要`islock`去操作
+
+秒杀数量：扣减，数量为0用户
+
+
+
+
+
 ## 2 项目介绍
 
 ### 2.1 技术栈介绍
@@ -308,158 +321,9 @@ CREATE TABLE `tb_address` (
 
 CentOS 7.6
 
-基础环境安装(Docker和JDK)
+安装看Docker栏安装安装文章
 
-#### 2.4.1 Docker和JDK安装
-
-Docker安装
-
-```bash
-# 设置仓库
-yum install -y yum-utils device-mapper-persistent-data lvm2
-yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-
-#安装
-yum install -y docker-ce docker-ce-cli containerd.io
-
-#启动
-systemctl start docker
-
-#设置开机启动
-systemctl enable docker
-
-#安装好后，可以查看docker的版本
-docker -v
-
-#修改Docker配置文件，使用国内的Docker镜像：
-vi /etc/docker/daemon.json
-
-# 添加以下内容
-{"registry-mirrors":["https://ncwlarc2.mirror.aliyuncs.com"]}
-
-#使之生效
-systemctl daemon-reload
-
-#重启
-systemctl restart docker
-```
-
-安装Docker Compose
-
-```bash
-# 上传资料里的docker-compose-Linux-x86_64
-
-# 移动并改名
-mv docker-compose-Linux-x86_64 /usr/local/bin/docker-compose
-
-# 将可执行权限应用于二进制文件：
-chmod +x /usr/local/bin/docker-compose
-
-# 创建软链：
-ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-
-# 测试是否安装成功：
-docker-compose --version
-```
-
-JDK安装
-
-```bash
-# jdk镜像仓库：https://repo.huaweicloud.com/java/jdk/8u171-b11/
-
-# 下载、解压jdk
-wget https://repo.huaweicloud.com/java/jdk/8u171-b11/jdk-8u171-linux-x64.tar.gz
-tar -zxf jdk-8u171-linux-x64.tar.gz
-mv jdk1.8.0_171 /usr/local/jdk8
-
-# 配置环境
-vi /etc/profile
-
-# 添加内容：
-export JAVA_HOME=/usr/local/jdk8
-export PATH=$JAVA_HOME/bin:$PATH
-
-# 配置生效命令
-source /etc/profile
-#查看j版本命令
-java -version
-```
-
-unzip命令安装
-
-```bash
-yum install -y unzip
-```
-
-#### 2.4.2 创建Nacos
-
-```bash
-# 启动容器
-docker run -id --name nacos \
---restart=always -p 8848:8848 \
--e MODE=standalone nacos/nacos-server:1.4.1
-```
-
-#### 2.4.3 创建MySQL
-
-后期要使用Canal，需要把MySQL的配置文件提取出来，所以要进行相关的配置文件的编写
-
-```bash
-#创建MySQL配置文件
-mkdir -p /mnt/mysql/conf
-#创建配置文件mysql.cnf
-vim /mnt/mysql/conf/mysql.cnf
-
-#内容如下：
-[mysqld]
-# 设置关闭二进制日志
-skip-log-bin
-```
-
-启动MySQL容器
-
-```bash
-# 创建MySQL网络环境，指定子网网段
-docker network create --subnet=172.36.0.0/16 seckill_network
-
-# 启动MySQL 指定容器IP，固定IP地址
-docker run -id --name seckill_mysql \
---net seckill_network --ip 172.36.0.3 \
--v /mnt/mysql/data:/var/lib/mysql \
--v /mnt/mysql/conf:/etc/mysql/conf.d \
---restart=always -p 3306:3306 \
--e MYSQL_ROOT_PASSWORD=eVcWs1dsEgiv4ijEZ1b6 mysql:8.0.18
-```
-
-#### 2.4.4 创建Elasticsearch和kibana
-
-准备IK分词器
-
-```bash
-# 创建存放IK分词器的目录
-mkdir -p /mnt/elasticsearch/plugins/ik
-
-# 上传IK分词器
-
-# 解压IK到指定路径
-tar -xf ik-7.4.0.tar -C /mnt/elasticsearch/plugins/ik
-```
-
-启动docker服务
-
-```bash
-# 创建单机版elasticsearch容器
-docker run -id --name elasticsearch \
---net seckill_network --ip 172.36.0.13 \
--v /mnt/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
---restart=always -p 9200:9200 -p 9300:9300 \
--e "discovery.type=single-node" elasticsearch:7.4.0
-
-# 创建kibana
-docker run -id --name kibana --net seckill_network \
--e ELASTICSEARCH_HOSTS=http://172.36.0.13:9200 \
---restart=always -p 5601:5601 kibana:7.4.0
-```
+最后：
 
 连接kibana，测试中文分词
 
