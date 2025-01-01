@@ -279,6 +279,8 @@ CREATE TABLE `tb_address` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
+#### 1.3.5 相对重要的表
+
 其中最重要的就是秒杀商品表了：tb_sku
 
 ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241231202400064.png)
@@ -287,11 +289,20 @@ CREATE TABLE `tb_address` (
 
 是否锁定：会进行热点数据的实时分析，对分析出来的热点商品进行隔离操作，非热点数据-非锁定，热点数据-锁定。而且后面会进行热点和非热点的隔离下单，那么也需要`islock`去操作
 
-秒杀数量：扣减，数量为0用户
+秒杀数量：扣减，数量为0就不能让用户下单，所以这里就存在一个==负库存==的问题。
 
+还有一个是秒杀订单表：
 
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250101110843885.png)
 
+首先是订单id，秒杀对应的是高流量，高并发，如果只有一个订单微服务肯定是应对不了的，所以要==部署集群==，让多个订单微服务同时处理订单，那订单id的唯一性如何保证，这里使用的是雪花算法，来保证==分布式场景下订单id的唯一性==
 
+#### 1.3.6 SKU和SPU
+
+- **SPU**：T恤
+- **SKU**：具体到这款T恤的每一个不同颜色和尺码的组合，比如“红色，M码”、“蓝色，L码”等
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250102001817204.png)
 
 ## 2 项目介绍
 
@@ -303,17 +314,7 @@ CREATE TABLE `tb_address` (
 
 ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/1586245527397.png)
 
-此次项目并不打算从0-1的去研发，我们打算遵循企业开发模式，从1-2的方式进行研发，所以这里将直接导入已经搭建好的工程。
-
-### 2.3 项目导入
-
-使用git，从仓库 https://gitee.com/sklll/seckill\_parent.git中拉取今天课程需要的代码
-
-项目导入后，结构如下：
-
-![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/1586317620792.png)
-
-### 2.4 环境准备
+### 2.3 环境准备
 
 由于项目最终跑起来需要的服务器内存较大，建议使用16G或者更大内存的云服务器进行部署。
 
@@ -321,7 +322,7 @@ CREATE TABLE `tb_address` (
 
 CentOS 7.6
 
-安装看Docker栏安装安装文章
+安装看本站Docker栏安装文章
 
 最后：
 
@@ -335,7 +336,9 @@ GET /_analyze
 }
 ```
 
-#### 2.4.5 配置IP映射
+![乒乓球明年总冠军](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250101164722241.png)
+
+#### 2.4 配置IP映射
 
 直接使用IP访问存在的问题：
 
@@ -361,11 +364,13 @@ GET /_analyze
 192.168.200.188 seata-server
 ```
 
-### 2.4 工程案例
+### 2.5 工程案例
 
 我们例举一下增删改查在当前项目中的一个案例。
 
 项目中相关服务地址采用了别名，需要将别名配置到`C:\Windows\System32\drivers\etc\hosts`文件中：
+
+可以借助uTools软件中的hosts插件完成
 
 ```plaintext
 192.168.200.188 db-server
@@ -394,11 +399,15 @@ GET /_analyze
 
 代码图解：
 
-![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/1586328443176.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250101233708996.png)
 
 ## 3 索引库数据管理
 
 &#x20;       秒杀商品数量庞大，我们要想实现快速检索，不建议直接使用关系型数据库查找。不建议使用Redis缓存所有数据，因为秒杀商品量大，会影响Redis的性能，并且Redis的条件检索能力偏弱。我们可以使用Elasticsearch，它在海量数据存储与检索上，能力卓越，市场使用面广。
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250102002451930.png)
+
+==类目名称==，==品牌名称==和==开始时间==是不做分词再搜索的，如果想找一个`平板电脑`，分词了变成了`平板`和`电脑`了。
 
 ### 3.1 批量导入
 

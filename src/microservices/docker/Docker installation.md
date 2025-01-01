@@ -136,18 +136,31 @@ docker官方镜像仓库网速较差，我们需要设置国内镜像服务：
 
 ```sh
 sudo mkdir -p /etc/docker
-sudo tee /etc/docker/daemon.json <<-'EOF'
+sudo tee /etc/docker/daemon.json <<-EOF
 {
-  "registry-mirrors": ["https://iuwhjmrq.mirror.aliyuncs.com"]
+    "registry-mirrors": [
+        "https://hub.geekery.cn",
+        "https://hub.littlediary.cn",
+        "https://mirrors.sohu.com", 
+        "https://docker.unsee.tech",
+        "https://docker.m.daocloud.io",
+        "https://hub.crdz.gq",
+        "https://docker.nastool.de",
+        "https://hub.firefly.store",
+        "https://registry.dockermirror.com",
+        "https://docker.1panelproxy.com",
+        "https://hub.rat.dev",
+        "https://docker.udayun.com",
+        "https://docker.kejilion.pro",
+        "https://dhub.kubesre.xyz",
+        "https://docker.1panel.live",
+        "https://dockerpull.org"
+    ]
 }
 EOF
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
-
-
-
-
 
 ## 2.CentOS7安装DockerCompose
 

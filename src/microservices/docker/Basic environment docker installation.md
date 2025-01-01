@@ -21,7 +21,9 @@ docker pull redis:7
 ```sh
 docker run -p 6379:6379 --name redis \
 -v /mydata/redis/data:/data \
--d redis:7 redis-server --appendonly yes
+-d redis:7 redis-server \
+--requirepass zgfD4T8h1KjV \
+--appendonly yes
 ```
 
 - 进入Redis容器使用`redis-cli`命令进行连接：
@@ -32,7 +34,11 @@ docker exec -it redis redis-cli
 
 ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241230172248420.png)
 
+如果启动后发现忘了加入密码，
 
+进入容器内部改密码的方式都是扯淡，
+
+最快的方式不如是停掉然后重run！
 
 ## JDK安装
 
@@ -79,14 +85,26 @@ yum install -y unzip
 
 ```sh
 #创建MySQL配置文件
-mkdir -p /mnt/mysql/conf
+mkdir -p /mydata/mysql/conf
 #创建配置文件mysql.cnf
-vim /mnt/mysql/conf/mysql.cnf
+vim /mydata/mysql/conf/mysql.cnf
 
 #内容如下：
 [mysqld]
 # 设置关闭二进制日志
 skip-log-bin
+```
+
+或者直接用下面的tee方式：
+
+```bash
+sudo tee /mydata/mysql/conf/mysql.cnf <<-'EOF'
+{
+    [mysqld]
+    # 设置关闭二进制日志
+    skip-log-bin
+}
+EOF
 ```
 
 - 启动MySQL容器
@@ -207,7 +225,18 @@ chmod 777 /mydata/elasticsearch/data/
 
 ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20241230172824287.png)
 
-- 下载完成后解压到Elasticsearch的`/mydata/elasticsearch/plugins`目录下；
+- 下载完成后解压到Elasticsearch的`/mydata/elasticsearch/plugin/analysis-ik`目录下；
+
+  ```sh
+  unzip elasticsearch-analysis-ik-7.17.3.zip -d ./analysis-ik
+  ```
+
+  ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250101162228953.png)
+
+- 这里要注意，一定要将压缩包删除，要不会报错
+
+  ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250101162025521.png)
+
 - 重新启动服务：
 
 ```sh
@@ -225,10 +254,10 @@ firewall-cmd --reload
 
 ```json
 {
-  "name": "708f1d885c16",
-  "cluster_name": "elasticsearch",
-  "cluster_uuid": "mza51wT-QvaZ5R0NmE183g",
-  "version": {
+"name": "dafc7a2de952",
+"cluster_name": "elasticsearch",
+"cluster_uuid": "IY_O0-U1QZ2oa3GBcXsvHg",
+    "version": {
     "number": "7.17.3",
     "build_flavor": "default",
     "build_type": "docker",
@@ -238,8 +267,8 @@ firewall-cmd --reload
     "lucene_version": "8.11.1",
     "minimum_wire_compatibility_version": "6.8.0",
     "minimum_index_compatibility_version": "6.0.0-beta1"
-  },
-  "tagline": "You Know, for Search"
+},
+"tagline": "You Know, for Search"
 }
 ```
 
