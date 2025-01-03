@@ -75,11 +75,44 @@ spring:
 
 Alt + 7，Ctrl + F12
 
+### 7、为什么要用Feign呢？
 
+为了实现不同微服务进行远程调用
 
+`seckill-search`的ES索引导入调用`seckill-goods`的`list`接口。
 
+```java
+//1、seckill-search
+List<Sku> skus = skuFeign.list(page, size);
+//2、seckill-feign-api page和size传到地址参数里
+@GetMapping(value = "/sku/list/{page}/{size}")
+List<Sku> list(@PathVariable(value = "page") Integer page, @PathVariable(value = "size") Integer size);
+//3、seckill-goods
+@GetMapping(value = "/list/{page}/{size}" )
+public List<Sku> list(@PathVariable  int page, @PathVariable  int size){
+    //调用SkuService实现分页条件查询Sku
+    List<Sku> skus = skuService.list(page, size);
+    return skus;
+}
+```
 
+### 8、计算总页数
 
+正好除尽，就`/`，不正好，那就再加个`1`
+
+```java
+//2.根据总记录数计算总页数
+int totalpages = total % size == 0 ? total / size : (total / size) + 1;
+```
+
+### 9、将Sku数据转换成SkuInfo
+
+先将`skus`List转化为json字符串，再将字符串转成SkuInfo
+
+```java
+List<Sku> skus = skuFeign.list(page, size);
+List<SkuInfo> skuInfos = JSON.parseArray(JSON.toJSONString(skus), SkuInfo.class);
+```
 
 
 

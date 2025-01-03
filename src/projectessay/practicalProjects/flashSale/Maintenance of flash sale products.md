@@ -425,10 +425,14 @@ GET   /api/sku/count    查询总数量
 GET   /api/sku/list/{page}/{size}  分页查询(page页码数，size每页据条数)
 
 分析：只需要查询秒杀商品即可，所以查询条件应该包括 ：
-秒杀数量  seckillNum     大于0
+秒杀商品数量  seckillNum     大于0
 秒杀状态  status         等于2(秒杀商品)
 秒杀结束时间 seckillEnd   大于当前时间
 ```
+
+
+
+
 
 **1)service总数量查询**
 
@@ -872,36 +876,55 @@ public class SearchController {
 
 批量操作优化：
 
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103114304001.png)
+
 1. 减少refresh时间间隔
 
-2. 减少刷新频率，降低潜在的写磁盘性能损耗。
+   说明：ES 默认的刷新时间间隔是1s，因为buffer到磁盘刷新时不能接受新的写入，
 
-3. 说明：ES 默认的刷新时间间隔是1s，对于写入量很大的场景，这样的配置会导致写入吞吐量很低，适当提高刷新间隔，可以提升写入量，代价就是让新写入的数据在更长时间之后才可以被搜索，新数据可见的及时性有所下降。
+   对于写入量很大的场景，这样的配置会导致写入吞吐量很低，适当提高刷新间隔，可以提升写入量，代价就是让新写入的数据在更长时间之后才可以被搜索，新数据可见的及时性有所下降。
    在bulk大量数据到ES集群的时候甚至可以关闭刷新频率，把其值设置为-1就是关闭了刷新频率，在导入完之后设置成合理的值即可，例如30s或者60s即可。
 
-```plaintext
-# 修改 refresh_interval 的设置  ，goodsindex1是索引名
-PUT goodsindex1/_settings
-{"refresh_interval": "3s"}
+   ```sh
+   # 修改 refresh_interval 的设置  ，goodsindex1是索引名
+   PUT goodsindex1/_settings
+   {"refresh_interval": "3s"}
+   ```
+
+2. 设置每次bulk的最佳数量
+
+   越大的bulk size会导致内存压力过大，因此最好一个请求不要发送超过10mb的数据量。
+
+   要知道一个bulk请求最佳的大小，需要对单个es node的单个shard做压测。先bulk写入100个document，然后200个，400个，以此类推，每次都将bulk size加倍一次。如果bulk写入性能开始变平缓的时候，那么这个就是最佳的bulk大小。
+
+3. 使用多线程
+
+   单线程发送bulk请求是无法最大化es集群写入的吞吐量的。
+
+   如果要利用集群的所有资源，就需要使用多线程并发将数据bulk写入集群中。
+
+   首先对单个es节点的单个shard做压测，例如先是2个线程，然后是4个线程，然后是8个线程，每次线程数量倍增。一旦发现es返回了TOO\_MANY\_REQUESTS的错误，JavaClient也就是EsRejectedExecutionException。此时那么就说明es是说已经到了一个并发写入的最大瓶颈了，此时我们就知道最多只能支撑这么高的并发写入了。
+
+4. 使用自动生成的id
+
+   如果手动给ES document设置一个id，那么ES需要每次都去确认一下那个id是否存在，这个过程比较耗费时间
+
+![](C:/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20250103113922065.png)
+
+==初次导入时间会比较长，因为要构建一些东西，后续执行稳定在0.5秒左右。==
+
+```sh
+# 执行以下DSL语句
+GET goodsindex/_search
+GET goodsindex/_doc/S1235473567706042368
+GET goodsindex/_doc/S1235433012716498944
 ```
 
-1. 设置每次bulk的最佳数量
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103114149914.png)
 
-2. 越大的bulk size会导致内存压力过大，因此最好一个请求不要发送超过10mb的数据量。
 
-3. 要知道一个bulk请求最佳的大小，需要对单个es node的单个shard做压测。先bulk写入100个document，然后200个，400个，以此类推，每次都将bulk size加倍一次。如果bulk写入性能开始变平缓的时候，那么这个就是最佳的bulk大小。
 
-4. 使用多线程
 
-5. 单线程发送bulk请求是无法最大化es集群写入的吞吐量的。
-
-6. 如果要利用集群的所有资源，就需要使用多线程并发将数据bulk写入集群中。
-
-7. 首先对单个es节点的单个shard做压测，例如先是2个线程，然后是4个线程，然后是8个线程，每次线程数量倍增。一旦发现es返回了TOO\_MANY\_REQUESTS的错误，JavaClient也就是EsRejectedExecutionException。此时那么就说明es是说已经到了一个并发写入的最大瓶颈了，此时我们就知道最多只能支撑这么高的并发写入了。
-
-8. 使用自动生成的id
-
-9. 如果手动给ES document设置一个id，那么ES需要每次都去确认一下那个id是否存在，这个过程比较耗费时间
 
 ### 3.2 增量导入
 
