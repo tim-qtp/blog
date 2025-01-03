@@ -909,7 +909,7 @@ public class SearchController {
 
    如果手动给ES document设置一个id，那么ES需要每次都去确认一下那个id是否存在，这个过程比较耗费时间
 
-![](C:/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20250103113922065.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103113922065.png)
 
 ==初次导入时间会比较长，因为要构建一些东西，后续执行稳定在0.5秒左右。==
 
