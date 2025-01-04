@@ -28,3 +28,4 @@ category:
 
 ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250101164310492.png)
 
+所以，如果你一天内没有拉取很多次镜像，你直接用阿里云镜像就可以！

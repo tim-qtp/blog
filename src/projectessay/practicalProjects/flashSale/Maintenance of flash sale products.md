@@ -756,6 +756,10 @@ public class ElasticSearchConfig {
 }
 ```
 
+
+
+
+
 #### 3.1.4 实现索引库批量导入
 
 在`seckill-search`的`com.seckill.search.service.SkuInfoService`中编写接口方法，代码如下：
@@ -880,7 +884,7 @@ public class SearchController {
 
 1. 减少refresh时间间隔
 
-   说明：ES 默认的刷新时间间隔是1s，因为buffer到磁盘刷新时不能接受新的写入，
+   说明：ES 默认的刷新时间间隔是1s
 
    对于写入量很大的场景，这样的配置会导致写入吞吐量很低，适当提高刷新间隔，可以提升写入量，代价就是让新写入的数据在更长时间之后才可以被搜索，新数据可见的及时性有所下降。
    在bulk大量数据到ES集群的时候甚至可以关闭刷新频率，把其值设置为-1就是关闭了刷新频率，在导入完之后设置成合理的值即可，例如30s或者60s即可。
@@ -890,6 +894,8 @@ public class SearchController {
    PUT goodsindex1/_settings
    {"refresh_interval": "3s"}
    ```
+
+   这里直接看[琐碎知识点](https://tim-qtp.github.io/blog/projectessay/practicalProjects/flashSale/Sporadic%20knowledge%20points.html#_10、es为什么频繁刷新-默认1秒-会出问题)的第10个。
 
 2. 设置每次bulk的最佳数量
 
@@ -928,7 +934,7 @@ GET goodsindex/_doc/S1235433012716498944
 
 ### 3.2 增量导入
 
-增量导入，也就是某个商品设置成秒杀商品的时候，或者发生变更的时候，能实现增量备份（只将修改的数据同步修改索引库），所以我们还需要实现单个商品导入索引库，我们可以在变更方法（增删改）中调用这边同步方法，但随着系统的增加，这种方法容易有漏网之鱼，我们可以采用canal实现数据库增量监听，然后调用`seckill-search`的单个操作方法。
+增量导入，也就是某个商品设置成秒杀商品的时候，或者发生变更的时候，能实现==增量备份==（==只将修改的数据同步修改索引库==），所以我们还需要实现单个商品导入索引库，我们可以在变更方法（增删改）中调用这边同步方法，但随着系统的增加，这种方法容易有漏网之鱼，我们可以采用canal实现数据库增量监听，然后调用`seckill-search`的单个操作方法。
 
 需求：需要对索引库进行数据维护，要实现增删改接口
 
@@ -1020,6 +1026,26 @@ public Result modifySku(@PathVariable(value = "type") Integer type, @RequestBody
     return new Result(true, StatusCode.OK, "操作成功！");
 }
 ```
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103234129887.png)
+
+查询到了！
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103234208339.png)
+
+
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103234300193.png)
+
+发现修改成功了！
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103234239044.png)
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103234344895.png)
+
+发现删除了！
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103234401354.png)
 
 2\)Feign接口编写
 
@@ -1168,9 +1194,17 @@ public Page<SkuInfo> search(@RequestParam(required = false) Map<String, String> 
 }
 ```
 
-## 4 商品详情页
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250104000057170.png)
+
+
+
+## 4 商品详情页，前端页面高QPS优化
+
+![image-20250104093445688](C:/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20250104093445688.png)
 
 ### 4.1 索引使用测试
+
+查看**加索引**和**不加索引**执行效率谁高！
 
 创建以下表：
 
@@ -1186,13 +1220,17 @@ CREATE TABLE `tb_table` (
 执行以下sql，批量添加10条数据：
 
 ```sql
+-- 它的目的是：
+-- 1.创建一个存储过程，名字叫 tb_insert。
+-- 2。这个存储过程会向表 tb_table 中插入 10 条数据，每条数据的 name 是 "张三0" 到 "张三9"，number 是 0 到 9。
+-- 3.事务操作确保数据插入要么全部成功，要么全部回滚。
 drop procedure if exists tb_insert; 
 CREATE PROCEDURE tb_insert()
 BEGIN
 DECLARE i INT;
 SET i = 0;
 START TRANSACTION;
-WHILE i < 10 DO -- 10即插入10条数据
+WHILE i < 100000 DO -- 即插入十万条数据
         INSERT INTO tb_table (`name`,`number`) VALUES (concat("张三",i),i);
         SET i = i+1;
 END WHILE;
@@ -1205,12 +1243,22 @@ call tb_insert();
 在表没有添加索引和添加索引的时候，都执行以下查询：
 
 ```sql
-SELECT * FROM tb_table WHERE number = 500000
+SELECT * FROM tb_table WHERE number = 50000
 ```
 
-然后再添加数据库的数据，插入100万条，再次测试有索引和没有索引的查询语句。
+然后再添加数据库的数据，插入十万条，再次测试有索引和没有索引的查询语句。
+
+对比：
+
+-- 2000毫秒
+
+-- 34毫秒
 
 &#x20;       通过上面的对比测试可以看出，索引是快速搜索的关键。MySQL索引的建立对于MySQL的高效运行是很重要的。对于少量的数据，没有合适的索引影响不是很大，但是，当随着数据量的增加，性能会急剧下降。
+
+> 对于更大的数据量，例如百万级或千万级，索引的作用更加明显。例如，在数据量超过百万甚至千万时，没有索引的情况下，一条查询SQL可能需要几十秒甚至更长时间来执行。而通过合理地创建索引，查询速度可以提升上万倍。
+>
+> ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250104103005817.png)
 
 ### 4.2 静态化入门案例
 
@@ -1765,7 +1813,11 @@ nginx
 nginx -s reload
 ```
 
-访问测试：<http://192.168.200.188/items/S1235433012716498944.html>
+访问测试：<http://8.140.49.168/items/S1235433012716498944.html>
+
+![可以正常访问](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250104115116016.png)
+
+
 
 ### 5.3 CDN加速
 
@@ -1779,7 +1831,9 @@ nginx -s reload
 
 CDN应用广泛，支持多种行业、多种场景内容加速，例如：图片小文件、大文件下载、视音频点播、直播流媒体、全站加速、安全加速。
 
-![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/v2-5ba76e77f05b030b5879177bd336928f_720w.jpg)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250104121416310.png)
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250104121846425.png)
 
 **使用CDN加速**
 
@@ -1801,7 +1855,17 @@ CDN应用广泛，支持多种行业、多种场景内容加速，例如：图�
 
 有了空间只有，就可以把css、js、图片等静态资源上传到空间中
 
-![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20210528160753321.png)
+![image-20250104122525538](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250104122525538.png)
+
+在阿里云服务器上ping七牛云链接
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250104145033279.png)
+
+在腾讯云服务器上ping七牛云链接
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250104145225393.png)
+
+这里会发现CDN地址不同
 
 然后在把模板中的静态资源请求地址全部换为CDN加速的地址
 
@@ -1815,4 +1879,93 @@ CDN应用广泛，支持多种行业、多种场景内容加速，例如：图�
 
 ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20210528164410888.png)
 
-# 第2章 
+
+
+## 6 Mysql批量导入(数据迁移)优化
+
+### 6.1 一次性插多条数据
+
+#### 6.1.1 逐条插入
+
+```java
+// 1. 逐条插入
+list.forEach((sku -> skuMapper.insertSelective(sku)));
+```
+
+1000 * 1
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103164209074.png)
+
+#### 6.1.2 一次插入多条
+
+用`forEach`的方式拼接成一条sql语句
+
+```java
+// 2. 一次插入多条
+skuMapper.batch(list);
+
+@Insert("<script> " +
+        "INSERT INTO `tb_sku` " +
+        "(`id`, `name`, `price`, `seckill_price`, `num`, `alert_num`, `image`, `images`," +
+        " `create_time`, `update_time`, `spu_id`, `category1_id`, `category2_id`, `category3_id`, " +
+        "`category1_name`, `category2_name`, `category3_name`, `brand_id`, `brand_name`, `sale_num`, `comment_num`, " +
+        "`seckill_end`, `seckill_begin`, `status`, `islock`, `seckill_num`, `audit`, `count`, `isdel`) " +
+        " VALUES " +
+        "<foreach  collection='list' item='item' separator=','>" +
+        "(#{item.id},#{item.name},#{item.price},#{item.seckillPrice},#{item.num},#{item.alertNum},#{item.image},#{item.images}" +
+        ",#{item.createTime},#{item.updateTime},#{item.spuId},#{item.category1Id},#{item.category2Id},#{item.category3Id}" +
+        ",#{item.category1Name},#{item.category2Name},#{item.category3Name},#{item.brandId},#{item.brandName},#{item.saleNum},#{item.commentNum}" +
+        ",#{item.seckillEnd},#{item.seckillBegin},#{item.status},#{item.islock},#{item.seckillNum},#{item.audit},#{item.count},#{item.isdel})" +
+        "</foreach>" +
+        "</script>")
+void batch(List<Sku> list);
+```
+
+1000 * 1
+
+![image-20250103164338421](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103164338421.png)
+
+1000 * 10
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103232314874.png)
+
+#### 6.1.3 多线程插入
+
+```java
+// 3. 多线程
+ExecutorService pool = Executors.newFixedThreadPool(4);
+int page = 10000;
+int count = list.size() / page;
+CountDownLatch countDownLatch = new CountDownLatch(count);
+
+for (int i = 0; i < count; i++) {
+    int finalI = i;
+    pool.execute(() -> {
+        skuMapper.batch(list.subList(finalI * page, (finalI + 1) * page));
+        countDownLatch.countDown();
+    });
+}
+try {
+    countDownLatch.await();
+} catch (InterruptedException e) {
+    e.printStackTrace();
+}
+```
+
+1000 * 10
+
+![image-20250103232955677](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250103232955677.png)
+
+### 6.2 不要使用主键，索引和外键
+
+### 6.3 合理（减少）使用事务提交
+
+### 6.4 多线程批量插入
+
+### 6.5 Mysql服务器参数优化
+
+> SQL语句是有==长度限制==的，在进行数据合并在同一SQL中务必不能超过SQL长度限制，通过`max allowed packet`配置可
+> 以修改
+> 事务需要控制大小，事务太大可能会影响执行的效率。MySQL有`Innodb_log_buffer_size`配置项，超过这个值会把
+> innodb的数据刷到磁盘中，这时，效率会有所下降。
+

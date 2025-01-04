@@ -10,6 +10,8 @@ title: Qtp生活
 
 主从模式的高可用数据库
 
+fink cdc
+
 > color=NavajoWhite
 > color=Feldspar
 > color=SandyBrown
