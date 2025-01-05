@@ -25,6 +25,6 @@ category:
 
 ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250105001741283.png)
 
-![image-20250105001823538](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250105001823538.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250105001823538.png)
 
 解决！

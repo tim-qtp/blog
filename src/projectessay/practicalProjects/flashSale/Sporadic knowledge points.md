@@ -226,7 +226,7 @@ for (int i = 0; i < totalpages; i++) {
 
 `binlog-format=ROW` 表示 **二进制日志记录的格式为行级别（ROW）**，即**记录每一行数据的具体变化**，而不是记录 SQL 语句（STATEMENT 格式）或混合（MIXED 格式）
 
-### **`ROW` 的作用**
+#### `ROW` 的作用
 
 当 `binlog-format=ROW` 启用时：
 
@@ -239,7 +239,7 @@ for (int i = 0; i < totalpages; i++) {
 
 ------
 
-### **`ROW` 的具体例子**
+#### `ROW` 的具体例子
 
 #### 假设有一张表：
 

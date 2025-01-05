@@ -351,9 +351,9 @@ public class DemoGlueJobHandler extends IJobHandler {
 
 ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250105210512060.png)
 
-### 2.6 执行器集群
+### 2.7 执行器集群
 
-#### 2.6.1 集群环境搭建
+#### 2.7.1 集群环境搭建
 
 在IDEA中设置SpringBoot项目运行开启多个集群
 
@@ -387,7 +387,7 @@ public class DemoGlueJobHandler extends IJobHandler {
 
   ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250105212329748.png)
 
-2.6.2 调度路由算法讲解
+2.7.2 调度路由算法讲解
 
 当执行器集群部署时，提供丰富的路由策略，包括:
 
@@ -425,9 +425,9 @@ public class DemoGlueJobHandler extends IJobHandler {
 
 在数据库中导入`xxl_job_demo.sql`数据
 
-#### 3.1.2 集成Druid&MyBatis 
+#### 3.1.2 集成Druid&MyBatis
 
-**添加依赖**
+添加依赖
 
 ```xml
 <!--MyBatis驱动-->
@@ -454,7 +454,7 @@ public class DemoGlueJobHandler extends IJobHandler {
 </dependency>
 ```
 
-**添加配置**
+添加配置
 
 ```yaml
 spring:
@@ -466,7 +466,7 @@ spring:
     password: 123.com
 ```
 
-**添加实体类**
+添加实体类
 
 ```java
 @Setter@Getter
@@ -479,7 +479,7 @@ public class UserMobilePlan {
 }
 ```
 
-**添加Mapper处理类**
+添加Mapper处理类
 
 ```java
 @Mapper
