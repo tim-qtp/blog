@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 7
 author: 
 title: "秒杀同步于ES状态是2的才往里插"
 category:

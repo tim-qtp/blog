@@ -337,3 +337,19 @@ DELETED: (1, 'Laptop', 5500.00)
 
 - 会完整记录删除的这一行数据，便于数据恢复和同步。
 
+### 15、根据模板名字获取模板对象
+
+```java
+Template template = configuration.getTemplate(templateName);
+```
+
+这里根据templateName去resources下的templates去获取test.ftl模板文件。
+
+```java
+//模板处理，获取生成的html文件字符串
+String content = FreeMarkerTemplateUtils.processTemplateIntoString(template, dataMap);
+
+//生成文件
+FileUtils.writeStringToFile(new File(path, fileName), content);
+```
+
