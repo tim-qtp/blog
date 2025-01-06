@@ -1,1 +1,0 @@
-import{_ as t,W as o,X as a,$ as e,a0 as s}from"./framework-6a3aa88c.js";const r={},c=e("h3",{id:"astro",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#astro","aria-hidden":"true"},"#"),s(" Astro")],-1),n=e("p",null,"electron-egg",-1),_=[c,n];function l(d,i){return o(),a("div",null,_)}const f=t(r,[["render",l],["__file","tool.html.vue"]]);export{f as default};
