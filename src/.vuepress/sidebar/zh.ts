@@ -93,6 +93,13 @@ export const zhSidebar = sidebar({
           children: "structure",
           collapsible: true,
         },
+        {
+          icon: "git",
+          text: "Git",
+          prefix: "git",
+          children: "structure",
+          collapsible: true,
+        },
       ]
     },
     {
@@ -134,6 +141,13 @@ export const zhSidebar = sidebar({
           icon: "springcloud",
           text: "SpringCloud",
           prefix: "springcloud/",
+          children: "structure",
+          collapsible: true,
+        },
+        {
+          icon: "netty",
+          text: "Netty",
+          prefix: "netty/",
           children: "structure",
           collapsible: true,
         },
@@ -290,7 +304,7 @@ export const zhSidebar = sidebar({
         {
           icon: "scaffold",
           text: "脚手架",
-          prefix: "fm",
+          prefix: "scaffold",
           children: "structure",
           collapsible: true,
         }

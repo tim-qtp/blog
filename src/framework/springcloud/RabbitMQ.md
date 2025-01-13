@@ -31,7 +31,7 @@ docker pull rabbitmq:3-management
 
 在课前资料已经提供了镜像包：
 
-![image-20210423191210349](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/286a6f2ffc911e97267fd4238d9f0e41.png) 
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/286a6f2ffc911e97267fd4238d9f0e41.png) 
 
 上传到虚拟机中后，使用命令加载镜像即可：
 
@@ -47,7 +47,7 @@ docker load -i mq.tar
 docker run \
  -e RABBITMQ_DEFAULT_USER=ysjf \
  -e RABBITMQ_DEFAULT_PASS=123456 \
- --name mq-qtp \
+ --name mq \
  --hostname mq1-qtp \
  -p 15672:15672 \
  -p 5672:5672 \
@@ -56,8 +56,8 @@ docker run \
 ```
 
 - `docker run` ：运行一个新的容器。
-- `-e RABBITMQ_DEFAULT_USER=itcast` ：设置 RabbitMQ 的默认用户名为 itcast。
-- `-e RABBITMQ_DEFAULT_PASS=123321` ：设置 RabbitMQ 的默认密码为 123321。
+- `-e RABBITMQ_DEFAULT_USER=itcast` ：设置 RabbitMQ 的默认用户名为 ysjf。
+- `-e RABBITMQ_DEFAULT_PASS=123321` ：设置 RabbitMQ 的默认密码为 123456。
 - `--name mq` ：为容器指定一个名称为 mq。
 - `--hostname mq1` ：设置容器的主机名为 mq1。
 - `-p 15672:15672` ：将主机的 15672 端口映射到容器的 15672 端口（RabbitMQ Web 管理界面）。
@@ -65,11 +65,21 @@ docker run \
 - `-d` ：以守护进程（后台）模式运行容器。
 - `rabbitmq:3-management` ：使用 RabbitMQ 3 版本的镜像，并安装 RabbitMQ 的 Web 管理插件。
 
-![image-20230613153626237](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/57536bf7595e6b75d08dad7b50576b29.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/57536bf7595e6b75d08dad7b50576b29.png)
 
-![image-20230613105507779](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/25726977c2205e9fbb3b2277b9fe50a9.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/25726977c2205e9fbb3b2277b9fe50a9.png)
 
-![image-20230613153711853](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/2caec99716db70b30805ff7acb29fc2b.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/2caec99716db70b30805ff7acb29fc2b.png)
+
+但是新增一个用户后，它是没有任何的访问权的
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250113152802983.png)
+
+会发现有个虚拟主机的概念，不同的用户可以被划分到不同的虚拟主机中，==资源隔离，交换机、队列、绑定等资源不会互相影响==
+
+为多租户提供独立的，隔离的消息队列环境，**确保它们之间的资源不会互相干扰**。
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250113153610815.png)
 
 ### 2.集群部署
 
@@ -112,21 +122,21 @@ docker run \
 
 异步通讯：就像发邮件，不需要马上回复。
 
-![image-20210717161939695](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/106f8d2aa5c00e9fb9eb5a8573067f8c.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/106f8d2aa5c00e9fb9eb5a8573067f8c.png)
 
 两种方式各有优劣，打电话可以立即得到响应，但是你却不能跟多个人同时通话。发送邮件可以同时与多个人收发邮件，但是往往响应会有延迟。
 
-
+ 
 
 ### 1.1.1.同步通讯
 
 
 
-我们之前学习的Feign调用就属于同步方式，虽然调用可以实时得到结果，但存在下面的问题：
+之前的Feign调用就属于同步方式，虽然调用可以实时得到结果，但存在下面的问题：
 
-![image-20230613081751934](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/003ad1849566fa46a159236391ea785a.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/003ad1849566fa46a159236391ea785a.png)
 
-![image-20210717162004285](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/23378c2aada7a093bdff03f4001ff8e0.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/23378c2aada7a093bdff03f4001ff8e0.png)
 
 
 
@@ -151,27 +161,27 @@ docker run \
 
 异步调用常见实现就是事件驱动模式
 
-![image-20230613090951935](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/20d3bc96171880e6d3bf4180a63edc2f.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/20d3bc96171880e6d3bf4180a63edc2f.png)
 
 
 
 - 优势一：服务解耦
 
-![image-20230613091104486](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/567f3ac9309c6509e9c17cfbed8f1dda.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/567f3ac9309c6509e9c17cfbed8f1dda.png)
 
-无论是增加还是取消业务，我们都不用改（支付服务）代码；
+无论是增加还是取消业务，我们都不用改（支付服务）代码（通知你们了，不关我支付服务的事了）；
 
 - 优势二：性能提升，吞吐量提高
 
-![image-20230613091951246](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/01b9bd86f6dbd195bb7fee738dbe26b4.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/01b9bd86f6dbd195bb7fee738dbe26b4.png)
 
 - 优势三：服务没有强依赖，不担心级联失败问题（也不用担心资源浪费的情况了）
 
-![image-20230613092053402](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/adc06dec9d89e296871e85e2708329cc.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/adc06dec9d89e296871e85e2708329cc.png)
 
 - 优势四：流量削峰
 
-![image-20230613092116614](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/aa89e3e976c65cf3d6d991916988106c.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/aa89e3e976c65cf3d6d991916988106c.png)
 
 就像有洪水来了，我有个大坝给水续住，你能拿几个我就给你几个；  那订单、仓储、短信服务就是一直按照自己的能力来；
 
@@ -189,7 +199,7 @@ docker run \
 
 为了解除事件发布者与订阅者之间的耦合，两者并不是直接通信，而是有一个中间人（Broker）。发布者发布事件到Broker，不关心谁来订阅事件。订阅者从Broker订阅事件，不关心谁发来的消息。
 
-![image-20210422095356088](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/eb7d85ef85916122bf0cd72964a98198.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/eb7d85ef85916122bf0cd72964a98198.png)
 
 
 
@@ -213,11 +223,7 @@ Broker 是一个像数据总线一样的东西，所有的服务要接收数据�
 - 架构复杂了，业务没有明显的流程线，不好管理
 - 需要依赖于Broker的可靠、安全、性能
 
-
-
-
-
-好在现在开源软件或云平台上 Broker 的软件是非常成熟的，比较常见的一种就是我们今天要学习的MQ技术。
+好在现在开源软件或云平台上 Broker 的软件是非常成熟的，比较常见的一种就是现在的MQ技术。
 
 
 
@@ -258,24 +264,13 @@ MQ，中文是消息队列（MessageQueue），字面来看就是存放消息的
 
 追求消息低延迟：RabbitMQ、Kafka
 
-
-
 # 2.快速入门
 
 RabbitMQ是基于Erlang语言开发的开源消息通信中间件，官网地址：https://www.rabbitmq.com/
-安装RabbitMQ，参考课前资料：
-
-![image-20230613103326071](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/b6a2995c42aa2643844b0281b95bb0cb.png)
-
-## 2.1.安装RabbitMQ
-
-安装RabbitMQ，参考课前资料：
-
-![image-20210717162628635](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/5c1669b238f8f7e4f758b36bc18e71d9.png)
 
 MQ的基本结构：
 
-![image-20210717162752376](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/aaddbecc89366515ac1d22420a84da93.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/aaddbecc89366515ac1d22420a84da93.png)
 
 
 
@@ -291,41 +286,21 @@ RabbitMQ中的一些角色：
 
 
 
-## 2.2.RabbitMQ消息模型
+## 2.1.RabbitMQ消息模型
 
 RabbitMQ官方提供了5个不同的Demo示例，对应了不同的消息模型：
 
-![image-20210717163332646](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/a3111e563a02b1cf35fdaf151e93b51c.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/a3111e563a02b1cf35fdaf151e93b51c.png)
 
 
 
 
 
-
-
-## 2.3.导入Demo工程
-
-课前资料提供了一个Demo工程，mq-demo:
-
-![image-20210717163253264](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/aec0cbc036512f792235c9b60e32fdf0.png)
-
-导入后可以看到结构如下：
-
-![image-20210717163604330](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/4f75a1776a13dcfbfcc09ed17cab4337.png)
-
-包括三部分：
-
-- mq-demo：父工程，管理项目依赖
-- publisher：消息的发送者
-- consumer：消息的消费者
-
-
-
-## 2.4.入门案例
+## 2.2.入门案例
 
 简单队列模式的模型图：
 
- ![image-20210717163434647](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/da67913c93deb41615371d4291a5b23b.png)
+ ![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/da67913c93deb41615371d4291a5b23b.png)
 
 官方的HelloWorld是基于最基础的消息队列模型来实现的，只包括三个角色：
 
@@ -337,7 +312,7 @@ RabbitMQ官方提供了5个不同的Demo示例，对应了不同的消息模型�
 
 
 
-### 2.4.1.publisher实现
+### 2.2.1.publisher实现
 
 思路：
 
@@ -395,21 +370,23 @@ public class PublisherTest {
 }
 ```
 
-![image-20230613154416557](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/4196646861bd46d28e875975b5bb8ce7.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/4196646861bd46d28e875975b5bb8ce7.png)
 
-![image-20230613154326159](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/b77a5f1538e3a4601ebed55a140701fb.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/b77a5f1538e3a4601ebed55a140701fb.png)
 
 有意思
 
-![image-20230613154517997](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/0ef01a01d1a2f47ac08264eb1364b606.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/0ef01a01d1a2f47ac08264eb1364b606.png)
 
-![image-20230613154553409](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/ce2699c2d5e4082926bc622aa75f4f8f.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/ce2699c2d5e4082926bc622aa75f4f8f.png)
 
-### ![image-20230613155207555](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/ff94c20c3960ea8cb3c8deb2343308c3.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/ff94c20c3960ea8cb3c8deb2343308c3.png)
 
-close完我就不管了
+close完，谁消费，我就不管了
 
-### consummer实现
+
+
+### 2.2.2.consummer实现
 
 代码思路：
 
@@ -417,8 +394,6 @@ close完我就不管了
 - 创建Channel
 - 声明队列
 - 订阅消息
-
-
 
 代码实现：
 
@@ -474,19 +449,19 @@ public class ConsumerTest {
 }
 ```
 
-![image-20230613160825750](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/c7249ad03148badb5eed9012b56834aa.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/c7249ad03148badb5eed9012b56834aa.png)
 
-![image-20230613160918975](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/c3e8f3b49efc42187dfaac4afbb621fe.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/c3e8f3b49efc42187dfaac4afbb621fe.png)
 
-### 阅后即焚
+#### 阅后即焚
 
-### 都声明队列是因为，不确定执行顺序，避免不存在
+#### 都声明队列是因为，不确定执行顺序，避免不存在
 
-### handleDelivery其实是回调函数，异步处理机制
+#### handleDelivery其实是回调函数，异步处理机制
 
 
 
-### 2.5.总结
+### 2.2.3.总结
 
 基本消息队列的消息发送流程：
 
@@ -510,19 +485,15 @@ public class ConsumerTest {
 
 5. 利用channel将消费者与队列绑定
 
-
-
-
-
 # 3.SpringAMQP
 
 SpringAMQP是基于RabbitMQ封装的一套模板，并且还利用SpringBoot对其实现了自动装配，使用起来非常方便。
 
 SpringAmqp的官方地址：https://spring.io/projects/spring-amqp
 
-![image-20210717164024967](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/9a5586ecb674145cbc6e53b4e01631f3.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/9a5586ecb674145cbc6e53b4e01631f3.png)
 
-![image-20210717164038678](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/41985e5da814cdd7a4dff5619ab0441c.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/41985e5da814cdd7a4dff5619ab0441c.png)
 
 
 
@@ -533,9 +504,6 @@ SpringAMQP提供了三个功能：
 - 基于注解的监听器模式，异步接收消息
 
 - 封装了RabbitTemplate工具，用于发送和接收消息 
-
-  
-
 
 
 ## 3.1.Basic Queue 简单队列模型
@@ -592,7 +560,7 @@ public class SpringAmqpTest {
         // 队列名称
         String queueName = "simple.queue";
         // 消息
-        String message = "hello, spring amqp!";
+        String message = "hel1o,美女！我是帅哥！";
         // 发送消息
         rabbitTemplate.convertAndSend(queueName, message);
     }
@@ -642,8 +610,6 @@ public class SpringRabbitListener {
 ### 3.1.3.测试
 
 启动consumer服务，然后在publisher服务中运行测试代码，发送MQ消息
-
-
 
 
 
@@ -769,7 +735,7 @@ public void listenWorkQueue2(String msg) throws InterruptedException {
 > 消费者2........接收到消息：【hello, message_47】18:03:52.680
 > 消费者2........接收到消息：【hello, message_49】18:03:52.883
 
-也就是说消息是平均分配给每个消费者，并没有考虑到消费者的处理能力。这样显然是有问题的。
+也就是说消息是==平均分配==给每个消费者，==并没有考虑到消费者的处理能力==。这样显然是有问题的。
 
 
 
@@ -777,7 +743,11 @@ public void listenWorkQueue2(String msg) throws InterruptedException {
 
 ### 3.2.4.能者多劳
 
-在spring中有一个简单的配置，可以解决这个问题。我们修改consumer服务的application.yml文件，添加配置：
+在spring中有一个简单的配置，可以解决这个问题。
+
+以前是有多少平均分给多少，现在不一样了，每次只能拿一个，消费完了，再和我要。
+
+我们修改consumer服务的application.yml文件，添加配置：
 
 ```yaml
 spring:
@@ -990,11 +960,11 @@ public class FanoutConfig {
  * 我要发到交换机上
  */
 @Test
-public void testFanoutExchange() {
+public void testFanoutExchange() { 
     // 队列名称
-    String exchangeName = "itcast.fanout";
+    String exchangeName = "ysjf.fanout";
     // 消息
-    String message = "hello, everyone!";
+    String message = "你们好啊";
     rabbitTemplate.convertAndSend(exchangeName, "", message);
 }
 ```
@@ -1077,7 +1047,7 @@ public void listenFanoutQueue2(String msg) {
 ```java
 @RabbitListener(bindings = @QueueBinding(
     value = @Queue(name = "direct.queue1"),
-    exchange = @Exchange(name = "itcast.direct", type = ExchangeTypes.DIRECT),
+    exchange = @Exchange(name = "ysjf.direct", type = ExchangeTypes.DIRECT),
     key = {"red", "blue"}
 ))
 public void listenDirectQueue1(String msg){
@@ -1086,7 +1056,7 @@ public void listenDirectQueue1(String msg){
 
 @RabbitListener(bindings = @QueueBinding(
     value = @Queue(name = "direct.queue2"),
-    exchange = @Exchange(name = "itcast.direct", type = ExchangeTypes.DIRECT),
+    exchange = @Exchange(name = "ysjf.direct", type = ExchangeTypes.DIRECT),
     key = {"red", "yellow"}
 ))
 public void listenDirectQueue2(String msg){
@@ -1118,15 +1088,15 @@ public void listenDirectQueue2(String msg){
 //        String message = "今天有强降雨";  //yellow
         //发送
         rabbitTemplate.convertAndSend(exchangeName,"red",message);
-    }bbitTemplate.convertAndSend(exchangeName, "red", message);
+    }
 }
 ```
 
-```
-消费者接收到direct.queue1的消息：【今天天气不错】
-消费者接收到direct.queue2的消息：【今天有强降雨】
+```java
+消费者接收到direct.queue1的消息：【今天天气不错】 //blue
+消费者接收到direct.queue2的消息：【今天有强降雨】 //yellow
 消费者接收到direct.queue2的消息：【红色警报！日本乱排核废水，导致海洋生物变异，惊现哥斯拉！】
-消费者接收到direct.queue1的消息：【红色警报！日本乱排核废水，导致海洋生物变异，惊现哥斯拉！】
+消费者接收到direct.queue1的消息：【红色警报！日本乱排核废水，导致海洋生物变异，惊现哥斯拉！】 //red
 ```
 
 
@@ -1135,22 +1105,18 @@ public void listenDirectQueue2(String msg){
 
 描述下Direct交换机与Fanout交换机的差异？
 
-- Fanout交换机将消息路由给每一个与之绑定的队列
-- Direct交换机根据RoutingKey判断路由给哪个队列2
+- Fanout交换机将消息路由给每一个与之==绑定==的队列
+- Direct交换机根据RoutingKey判断路由给哪个队列
 - 如果多个队列具有相同的RoutingKey，则与Fanout功能类似
 
 基于@RabbitListener注解声明队列和交换机有哪些常见注解？
 
-- @Queue2
+- @Queue
 - @Exchange
 
 
 
-
-
 ## 3.6.Topic
-
-
 
 ### 3.6.1.说明
 
@@ -1239,7 +1205,7 @@ public void listenDirectQueue2(String msg){
 ```java
 @RabbitListener(bindings = @QueueBinding(
     value = @Queue(name = "topic.queue1"),
-    exchange = @Exchange(name = "itcast.topic", type = ExchangeTypes.TOPIC),
+    exchange = @Exchange(name = "ysjf.topic", type = ExchangeTypes.TOPIC),
     key = "china.#"
 ))
 public void listenTopicQueue1(String msg){
@@ -1248,7 +1214,7 @@ public void listenTopicQueue1(String msg){
 
 @RabbitListener(bindings = @QueueBinding(
     value = @Queue(name = "topic.queue2"),
-    exchange = @Exchange(name = "itcast.topic", type = ExchangeTypes.TOPIC),
+    exchange = @Exchange(name = "ysjf.topic", type = ExchangeTypes.TOPIC),
     key = "#.news"
 ))
 public void listenTopicQueue2(String msg){
@@ -1256,10 +1222,10 @@ public void listenTopicQueue2(String msg){
 }
 ```
 
-```
-消费者接收到topic.queue2的消息：【喜报！孙悟空大战哥斯拉，胜!】
-消费者接收到topic.queue1的消息：【喜报！孙悟空大战哥斯拉，胜!】
-消费者接收到topic.queue2的消息：【日本研发新型收发器促进6G技术发展 助于满足自动驾驶低延迟需求】
+```java
+消费者接收到topic.queue2的消息：【喜报！孙悟空大战哥斯拉，胜!】 //china.news
+消费者接收到topic.queue1的消息：【喜报！孙悟空大战哥斯拉，胜!】 //china.news
+消费者接收到topic.queue2的消息：【日本研发新型收发器促进6G技术发展 助于满足自动驾驶低延迟需求】 //japan.news
 ```
 
 
@@ -1268,7 +1234,7 @@ public void listenTopicQueue2(String msg){
 
 描述下Direct交换机与Topic交换机的差异？
 
-- Topic交换机接收的消息RoutingKey必须是多个单词，以 `**.**` 分割
+- Topic交换机接收的消息RoutingKey必须是多个单词，以 `.` 分割
 - Topic交换机与队列绑定时的bindingKey可以指定**通配符**
 - `#`：代表0个或多个词
 - `*`：代表1个词
@@ -1281,11 +1247,11 @@ public void listenTopicQueue2(String msg){
 
 ![image-20200525170410401](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/804295bbaa632ee925241037ad999f41.png)
 
-只不过，默认情况下Spring采用的序列化方式是JDK序列化。众所周知，JDK序列化存在下列问题：
+只不过，默认情况下Spring采用的序列化方式是==JDK==序列化。众所周知，JDK序列化存在下列问题：
 
-- 数据体积过大
-- 有安全漏洞
-- 可读性差
+- ==数据体积过大==
+- ==有安全漏洞==
+- ==可读性差==
 
 我们来测试一下。
 
@@ -1302,7 +1268,7 @@ public void listenTopicQueue2(String msg){
 public void testSendMap() throws InterruptedException {
     // 准备消息
     Map<String,Object> msg = new HashMap<>();
-    msg.put("name", "柳岩");
+    msg.put("name", "刘浩存");
     msg.put("age", 45);
     // 发送消息
     rabbitTemplate.convertAndSend("simple.queue","", msg);
@@ -1311,7 +1277,7 @@ public void testSendMap() throws InterruptedException {
 
 
 
-停止consumer服务
+停止`consumer`服务
 
 
 
@@ -1323,8 +1289,8 @@ public void testSendMap() throws InterruptedException {
 
 ### 3.7.2.配置JSON转换器
 
-Spring的对消息对象的处理是由org.springframework.amqp.support.converter.MessageConverter来处理的。而默认实现是SimpleMessageConverter，基于JDK的ObjectOutputStream完成序列化。
-如果要修改只需要定义一个MessageConverter 类型的Bean即可。推荐用JSON方式序列化，步骤如下：
+Spring的对消息对象的处理是由`org.springframework.amqp.support.converter.MessageConverter`来处理的。而默认实现是`SimpleMessageConverter`，基于JDK的`ObjectOutputStream`完成序列化。
+如果要修改只需要定义一个`MessageConverter` 类型的Bean即可。==推荐用JSON方式序列化==，步骤如下：
 
 显然，JDK序列化方式并不合适。我们希望消息体的体积更小、可读性更高，因此可以使用JSON方式来做序列化和反序列化。
 
@@ -1349,103 +1315,25 @@ public MessageConverter jsonMessageConverter(){
 }
 ```
 
-![ ](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/6d1f4af3d63e04d2c4e0b309fac0ffb1.png)
-
-
-
-```java
-@RabbitListener(queues = "object.queue")
-public void listenObjectQueue(Map<String, Object> msg){
-System.out.println("消息为：名字--"+msg.get("name")+"+年龄--"+msg.get("age"));
-}
-```
-
-
-
-```
-消息为：名字--柳岩+年龄--45
-```
-
-
-
-们来测试一下。
-
-
-
-### 3.7.1.测试默认转换器
-
-
-
-我们修改消息发送的代码，发送一个Map对象：
-
-```java
-@Test
-public void testSendMap() throws InterruptedException {
-    // 准备消息
-    Map<String,Object> msg = new HashMap<>();
-    msg.put("name", "柳岩");
-    msg.put("age", 45);
-    // 发送消息
-    rabbitTemplate.convertAndSend("simple.queue","", msg);
-}
-```
-
-
-
-停止consumer服务
-
-
-
-发送消息后查看控制台：
-
-![image-20210422232835363](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/405a626477eaf1bc802b81e47f7636be.png)
-
-
-
-### 3.7.2.配置JSON转换器
-
-Spring的对消息对象的处理是由org.springframework.amqp.support.converter.MessageConverter来处理的。而默认实现是SimpleMessageConverter，基于JDK的ObjectOutputStream完成序列化。
-如果要修改只需要定义一个MessageConverter 类型的Bean即可。推荐用JSON方式序列化，步骤如下：
-
-显然，JDK序列化方式并不合适。我们希望消息体的体积更小、可读性更高，因此可以使用JSON方式来做序列化和反序列化。
-
-在publisher和consumer两个服务中都引入依赖：
-
-```xml
-<dependency>
-    <groupId>com.fasterxml.jackson.dataformat</groupId>
-    <artifactId>jackson-dataformat-xml</artifactId>
-    <version>2.9.10</version>
-</dependency>
-```
-
-配置消息转换器。
-
-在publisher启动类中添加一个Bean即可：
-
-```java
-@Bean
-public MessageConverter jsonMessageConverter(){
-    return new Jackson2JsonMessageConverter();
-}
-```
-
-![ ](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/4dd7865e47b4a54c2520c0c90ccb6812.png)
-
 
 
 ```java
 @RabbitListener(queues = "object.queue")
-public void listenObjectQueue(Map<String, Object> msg){
-System.out.println("消息为：名字--"+msg.get("name")+"+年龄--"+msg.get("age"));
+    public void listenObjectQueue(Map<String, Object> msg){
+    System.out.println("消息为：名字--"+msg.get("name")+"+年龄--"+msg.get("age"));
 }
 ```
 
 
 
-```
-消息为：名字--柳岩+年龄--45
+```java
+消息为：名字--刘浩存+年龄--25
 ```
 
+### 3.7.3.最后注意
 
+SpringAMQP中消息的序列化和反序列化是怎么实现的？
+
+- 利用`MessageConverter`实现的，默认是DK的序列化
+- 注意发送方与接收方必须使用相同的`MessageConverter`
 
