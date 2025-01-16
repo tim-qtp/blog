@@ -314,8 +314,28 @@ export const zhSidebar = sidebar({
       icon: "github",
       text: "九、开源推荐",
       prefix: "opensource/",
-      children: "structure",
       collapsible: true,
+      children: "structure"
+    },
+    {
+      icon: "xiayu",
+      text: "十、技术琐碎",
+      collapsible: true,
+      prefix: "rain/",
+      children: [
+        {
+          icon: "clash",
+          text: "Clash",
+          prefix: "clash",
+          collapsible: true,
+          children: [
+            "Openclash"
+          ],
+        },
+        "1.VPN",
+        "2.Soft Router Prerequisite Home Network Communication",
+        "3.Side Router"
+      ]
     },
   ],
   "/life/": [
