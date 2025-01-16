@@ -1,1 +1,0 @@
-import{_ as e,W as t,X as _}from"./framework-6a3aa88c.js";const r={};function a(c,s){return t(),_("div")}const n=e(r,[["render",a],["__file","2.Three ways to create threads.html.vue"]]);export{n as default};
