@@ -329,7 +329,11 @@ export const zhSidebar = sidebar({
           prefix: "clash",
           collapsible: true,
           children: [
-            "Openclash"
+            "1.Openclash",
+            "2.IPLeak",
+            "3.LAN sharing",
+            "4.Clash Verge Rev",
+            "5.R2S install openwrt system"
           ],
         },
         "1.VPN",
