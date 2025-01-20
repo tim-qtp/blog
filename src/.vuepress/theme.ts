@@ -48,7 +48,6 @@ export default hopeTheme({
 
   plugins: {
     comment: {
-      // @ts-expect-error: You should generate and use your own comment service
       provider: 'Waline',
     },
 

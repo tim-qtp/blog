@@ -4,7 +4,7 @@ author:
 title: Qtp生活
 ---
 
-生活像一把无情刻刀，改变了我们...
+从悲观的角度来看，你有十万个理由说服自己，不做这种投入产出比极低的事情，冒着丢命的风险，你登顶了又能怎么样，你也不是第一个，早就有人来过。Links其实回答了这个问题，为什么要去想这些，比谁高，比谁快，比谁厉害，这是山，不是社会，无论走到哪个高度，是不是登顶，山都会回馈你，它会给你这份只属于你的感受。这话怎么说来着，悲观者总是正确，乐观者正在前行。
 
 写一个linux内核
 
@@ -12,36 +12,4 @@ title: Qtp生活
 
 fink cdc
 
-> color=NavajoWhite
-> color=Feldspar
-> color=SandyBrown
-> color=LightSalmon
-> color=Salmon
-> color=LightCoral
->
-> color=Pink
-> color=PaleVioletRed
-> color=HotPink
->
-> color=silver
-> color=LightSlateGray
-> color=SlateGray
-> color=grey
-> color=RosyBrown
-> color=maroon
->
-> color=DarkSeaGreen
-> color=LightSeaGreen
-> color=SeaGreen
->
-> color=PowderBlue
-> color=LightSteelBlue
-> color=CadetBlue
-> color=navy
->
-> color=Thistle
-> color=Plum
-> color=MediumPurple
-> color=Purple
-
-![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/191049a044630e3010aba4dda68ea90a.png)
+> 
