@@ -333,7 +333,21 @@ export const zhSidebar = sidebar({
             "2.IPLeak",
             "3.LAN sharing",
             "4.Clash Verge Rev",
-            "5.R2S install openwrt system"
+            "5.R2S install openwrt system",
+            "6.Self-built nodes",
+            "7.Various proxy issues",
+            "8.DNS Leak",
+            "9.Rule",
+          ],
+        },
+        {
+          icon: "encryption",
+          text: "加解密",
+          prefix: "encryption and decryption",
+          collapsible: true,
+          children: [
+            "1.Symmetric encryption and symmetric encryption",
+            "2.RSA"
           ],
         },
         "1.VPN",

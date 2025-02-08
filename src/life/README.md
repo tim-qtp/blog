@@ -12,4 +12,14 @@ title: Qtp生活
 
 fink cdc
 
+mysql: p58-p96，p121-p147
+
+redis：p147-p175
+
+juc并发编程：全看
+
+
+
+
+
 > 
