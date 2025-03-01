@@ -42,3 +42,10 @@ git remote -v
 
 ![Manage Remotes](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/image-20250102123024413.png)
 
+
+
+或者还有一个方法，也挺实用：
+
+clone后删除与git有关的所有文件，然后用idea打开项目，左上角点击git，然后share到github仓库，这里会让你登录，浏览器授权即可。
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/202503011321334.png)

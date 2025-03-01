@@ -125,24 +125,6 @@ category:
 ### 4.代码练习
 
 ```html
- <style>
-    .box {
-      width: 200px;
-      height: 200px;
-      border: 3px solid #000;
-      font-size: 30px;
-      margin-top: 10px;
-    }
-    .pink {
-      background-color: pink;
-    }
-    .big {
-      width: 300px;
-      height: 300px;
-    }
-  </style>
-
-
 <div id="app">
     <!--绑定对象-->
     <div class="box">黑马程序员</div>
@@ -171,36 +153,6 @@ category:
 ### 2.准备代码:
 
 ```html
- <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-    ul {
-      display: flex;
-      border-bottom: 2px solid #e01222;
-      padding: 0 10px;
-    }
-    li {
-      width: 100px;
-      height: 50px;
-      line-height: 50px;
-      list-style: none;
-      text-align: center;
-    }
-    li a {
-      display: block;
-      text-decoration: none;
-      font-weight: bold;
-      color: #333333;
-    }
-    li a.active {
-      background-color: #e01222;
-      color: #fff;
-    }
-
-  </style>
-
 <div id="app">
     <ul>
       <li><a class="active" href="#">京东秒杀</a></li>
@@ -241,34 +193,19 @@ category:
 <div class="box" :style="{ CSS属性名1: CSS属性值, CSS属性名2: CSS属性值 }"></div>
 ```
 
-### 2.代码练习
+### 2.进度条案例
+
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/202502261324102.png)
 
 ```html
-<style>
-    .box {
-      width: 200px;
-      height: 200px;
-      background-color: rgb(187, 150, 156);
-    }
- </style>
- <div id="app">
-    <div class="box"></div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-  <script>
-    const app = new Vue({
-      el: '#app',
-      data: {
-
-      }
-    })
-  </script>
-```
-
-### 3.进度条案例
-
-```html
- <style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress Bar with Vue</title>
+  <style>
     .progress {
       height: 25px;
       width: 400px;
@@ -279,7 +216,6 @@ category:
       margin-bottom: 30px;
     }
     .inner {
-      width: 50%;
       height: 20px;
       border-radius: 10px;
       text-align: right;
@@ -293,19 +229,25 @@ category:
       position: absolute;
       right: -20px;
       bottom: -25px;
+      color: #000;
+      font-weight: bold;
     }
   </style>
-
-<div id="app">
+</head>
+<body>
+  <div id="app">
+    <!-- 进度条 -->
     <div class="progress">
-      <div class="inner">
-        <span>50%</span>
+      <div class="inner" :style="{ width: progress + '%' }">
+        <span>{{ progress }}%</span>
       </div>
     </div>
-    <button>设置25%</button>
-    <button>设置50%</button>
-    <button>设置75%</button>
-    <button>设置100%</button>
+
+    <!-- 按钮 -->
+    <button @click="setProgress(25)">设置25%</button>
+    <button @click="setProgress(50)">设置50%</button>
+    <button @click="setProgress(75)">设置75%</button>
+    <button @click="setProgress(100)">设置100%</button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -313,10 +255,18 @@ category:
     const app = new Vue({
       el: '#app',
       data: {
-
+        progress: 50 // 初始进度为50%
+      },
+      methods: {
+        // 设置进度的方法
+        setProgress(percentage) {
+          this.progress = percentage;
+        }
       }
-    })
+    });
   </script>
+</body>
+</html>
 ```
 
 
@@ -341,15 +291,7 @@ category:
 ### 2.代码准备
 
 ```html
- <style>
-    textarea {
-      display: block;
-      width: 240px;
-      height: 100px;
-      margin: 10px 0;
-    }
-  </style>
-  <div id="app">
+<div id="app">
     <h3>小黑学习网</h3>
 
     姓名：
@@ -672,7 +614,7 @@ category:
 
 
 
-## 十二、watch侦听器完整写法
+## 十一、watch侦听器完整写法
 
 ### 1.语法
 
