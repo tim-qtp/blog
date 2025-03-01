@@ -1,5 +1,5 @@
 ---
-         order: 1
+order: 1
 author: 
 title: "Vue生命周期"
 category:
