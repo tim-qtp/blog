@@ -1,0 +1,1 @@
+import{_ as t,W as e,X as s,$ as _}from"./framework-6a3aa88c.js";const a={},n=_("p",null,"aaa",-1),c=[n];function o(r,i){return e(),s("div",null,c)}const l=t(a,[["render",o],["__file","5.Distributed transactions and distributed locks.html.vue"]]);export{l as default};
