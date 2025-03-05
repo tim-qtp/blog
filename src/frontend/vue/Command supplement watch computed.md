@@ -1,7 +1,7 @@
 ---
 order: 1
 author: 
-title: "指令补充,watchcomputed"
+title: "指令补充:watchcomputed"
 category:
   - 前端
   - Vue

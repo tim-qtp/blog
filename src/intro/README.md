@@ -20,33 +20,27 @@ category:
 
 ## :baby_chick: 计算机基础
 
-- [DataStruct-BrainMind](/fundamental/datastruct.md) 语言数据结构思维导图 ✅
-- [others](/others/personal_tech.md) 技术成长（个人总结的工具类、前后端联调心得等） ⏳
-- [prompt](/others/chatgpt_prompt) ChatGPT 常用 Prompt ⏳
+- [Computer-Network](/fundamental/network/1.http1-3.md) 计算机网络 ✅
+- [Design-Patterns](/fundamental/design_atterns/1.Chain-of-Responsibility-Pattern.md) 设计模式 ⏳
+- [Git](/Java/git/1.Version-Conflict.md) Git ⏳
 
 ## :tiger: Java 面试 & 八股文
 
-- [Eight-Part-Notes](/Java/eightpart/giant.md) Java 后端大厂面试八股文碎片知识整理（目前收录：字节、美团、拼多多、携程） ⏳
-- [Eight-Part-Selected](/Java/eightpart/foundation.md) 八股文精选集（精选高频和基础容易忽视的知识点、中小厂面试题）⏳
-- [Eight-Part-Think](/Java/eightpart/think.md) 八股文个人思考 ⏳
-- [LeetCode-Notes](/Java/leetcode/leetcode.md) 力扣刷题笔记（Java）⏳
+- [Eight-Part-Notes](/interview/1.4-months-ago.md)  4月中旬前会将面试过程及热门题目文章上传！🚫
 
-> 注：大厂面试和八股文精选集部分收录的网站来自 力扣、牛客的热门讨论
 
 ## :coffee: Java 知识体系
 
-- [basic](/Java/basic/basic.md) Java 基础思维导图 ✅
-- Spring-SpringMVC-MyBatis 笔记
-  - [Spring](/Java/fm/Spring.md) ✅
-  - [SpringMVC](/Java/fm/SpringMVC.md) ✅
-  - [Mybatis](/Java/fm/Mybatis.md) ✅
-- [SpringBoot](/Java/fm/SpringBoot.md) Spring-Boot 笔记 ✅
-- [SpringCloud](/Java/fm/SpringCloud.md) Spring-Cloud 笔记 ✅
-- [SpringSecurity](/Java/fm/SpringSecurity.md) Spring-Security 笔记 ✅
-- [SpringDataJpa](/Java/fm/SpringDataJpa.md) Spring-Data-Jpa 笔记 ✅
-- [JVM](/Java/jvm/part1/1.简介.md) JVM 笔记 ✅
-- [Concurrent](/Java/concurrent/concurrent.md) JUC 笔记 ✅
-- [Kotlin](/Java/kotlin/kotlin.md) kt 结合 SpringBoot 笔记 ⏳
+- [Basic](/Java/basic/1.What-is-serialization-and-deserialization-in-Java.md) Java基础笔记 ✅
+  - [Concurrent](/Java/concurrent/1.Process-thread-parallelism-and-concurrency.md) Juc笔记 ⏳
+  - [JVM](/Java/jvm/jvm-basis.md) JVM 笔记 ⏳
+- Spring-SpringBoot-SpringCloud-MyBatis 笔记
+  - [Spring](/framework/spring/1.spring.md) Spring 笔记 🚫
+  - [SpringBoot](/framework/springboot/1.springboot.md) SpringBoot 笔记 🚫
+  - [SpringCloud](/framework/springcloud/Microservices-with-Eureka-Ribbon.md) SpringCloud 笔记 ✅
+  - [Mybatis](/framework/mybatis/1.What-is-the-difference-between-MyBatis-ResultType-and-ResultMap.md) Mybatis 笔记 ⏳
+- [Redis](/Java/fm/SpringBoot.md) Redis 笔记 ✅
+- [Mysql](/Java/fm/SpringCloud.md) Mysql 笔记 ⏳
 
 ## 🦀 Rust 语言
 
@@ -54,13 +48,28 @@ category:
 
 ## :ocean: 前端
 
-- [Vue](/frontend/vue/vue.md) Vue2&Vue3 笔记 ✅
-- [React](/frontend/react/react.md) React 笔记 ✅
+- [Vue](/frontend/vue/vue.md) Vue2&Vue3 笔记 ⏳
+- [React](/frontend/react/1.React-Basics-Part-1.md) React 笔记 ⏳
+- [TS](/frontend/typescript/1.typescript.md) TypeScript 笔记 ⏳
 
-## :mouse: Golang
+## :mouse: 微服务中间件
 
-- [learnInProblem](/golang/learnInProblem.md) 从问题中学习到 Go 的精髓 ✅
+- [Docker](/microservices/docker/Docker-installation.md) Docker 笔记✅
+- [Nacos](/microservices/nacos/Strated.md) Nacos 笔记 ✅
+- [RocketMQ](/microservices/rocketmq/1.rocketmq.md) RocketMQ 笔记 🚫
+- [ElasticSearch](/microservices/elasticsearch/Install.md) ElasticSearch 笔记 ⏳
+- [Netflix-Hystrix](/microservices/hystrix/1.hystrix.md) Hystrix 笔记 🚫
+
+## :tokyo_tower: 项目随笔
+- [TechnicalDetails](/projectessay/technicalDetails/Aop.md) 技术细节 ⏳
+- [PracticalProjects](/projectessay/practicalProjects/flashSale/1.Maintenance-of-flash-sale-products.md) 实战项目 ⏳
+- [TechnicalDetails](/projectessay/scaffold/1.Time-series-configuration.md) 脚手架 ⏳
+- [LessonLearned](/projectessay/lessonsLearned/Alibaba-Cloud-Docker-Image-Quota.md) 经验教训 ⏳
 
 ## 🍒 好用推荐
 
-- [SoftWareRecommend](/recommend/software.md)
+- [Recommend](/opensource/tool.md) 收藏一些技术&琐碎&开源项目 ⏳
+
+
+## :keyboard: 技术琐碎
+- [Technical-Trivia](/rain/1.VPN.md)  日常学习的一些零零散散技术文章⏳
