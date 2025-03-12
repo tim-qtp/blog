@@ -202,9 +202,9 @@ export const zhSidebar = sidebar({
           collapsible: true,
         },
         {
-          icon: "hystrix",
-          text: "Netflix Hystrix",
-          prefix: "hystrix/",
+          icon: "sentinel",
+          text: "Sentinel",
+          prefix: "sentinel/",
           children: "structure", 
           collapsible: true,
         }
