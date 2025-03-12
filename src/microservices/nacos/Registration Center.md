@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 4
 author: 
 title: "注册中心"
 category:
