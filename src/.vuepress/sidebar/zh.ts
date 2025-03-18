@@ -59,6 +59,13 @@ export const zhSidebar = sidebar({
           collapsible: true,
         },
         {
+          icon: "collections",
+          text: "集合",
+          prefix: "collections",
+          children: "structure",
+          collapsible: true,
+        },
+        {
           icon: "concurrent",
           text: "并发",
           prefix: "concurrent",
