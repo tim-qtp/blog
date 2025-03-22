@@ -1,0 +1,1 @@
+import{_,W as t,X as n,$ as e}from"./framework-48328e23.js";const o={},s=e("p",null,"DATETIME 直接存储日期和时间的完整值（是固定的、绝对的日期和时间值），与时区无关。",-1),c=e("p",null,"TIMESTAMP 存储的是 Unix 时间戳，1970-01-01 00:00:01 UTC 以来的秒数（相对的），受时区影响。",-1),a=[s,c];function l(T,r){return t(),n("div",null,a)}const E=_(o,[["render",l],["__file","12.DATETIME and TIMESTAMP.html.vue"]]);export{E as default};

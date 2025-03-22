@@ -1,1 +1,0 @@
-import{_ as e,W as t,X as _,$ as n}from"./framework-6a3aa88c.js";const r={},o=n("p",null,"Spring AOP（面向切面编程）功能的实现依赖于代理模式。Spring 使用 JDK 动态代理或 CGLIB 代理来增强目标对象，从而实现功能扩展。",-1),c=[o];function s(a,l){return t(),_("div",null,c)}const d=e(r,[["render",s],["__file","4.Proxy Pattern.html.vue"]]);export{d as default};

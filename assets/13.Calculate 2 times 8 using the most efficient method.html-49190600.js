@@ -1,1 +1,0 @@
-import{_,W as s,X as o,$ as e,a0 as t}from"./framework-6a3aa88c.js";const c={},n=e("p",null,[e("code",null,"2 << 3"),t("。"),e("strong",null,"位运算"),t("，数字的二进制位左移三位相当于乘以 2 的三次方。")],-1),l=[n];function a(i,r){return s(),o("div",null,l)}const u=_(c,[["render",a],["__file","13.Calculate 2 times 8 using the most efficient method.html.vue"]]);export{u as default};

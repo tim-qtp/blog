@@ -1,1 +1,0 @@
-import{_ as e,W as t,X as _,$ as c}from"./framework-6a3aa88c.js";const o={},s=c("p",null,"当一条消息初次消费失败，消息队列 RocketMQ 会自动进行消息重试；达到最大重试次数后，若消费依然失败，则表明消费者在正常情况下无法正确地消费该消息，此时，消息队列 RocketMQ 不会立刻将消息丢弃，而是将其发送到该消费者对应的特殊队列中，该特殊队列称为死信队列。",-1),n=[s];function r(a,l){return t(),_("div",null,n)}const d=e(o,[["render",r],["__file","8.Dead Letter Queue.html.vue"]]);export{d as default};

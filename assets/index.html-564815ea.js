@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-1eac156a","path":"/projectessay/practicalProjects/flashSale/","title":"Flash Sale","lang":"zh-CN","frontmatter":{"title":"Flash Sale","article":false,"feed":false,"sitemap":false,"seo":false,"head":[]},"headers":[],"git":{},"readingTime":{"minutes":0.03,"words":10},"filePathRelative":null,"excerpt":""}');export{e as data};
