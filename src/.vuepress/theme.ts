@@ -11,7 +11,7 @@ export default hopeTheme({
   },
 
   // iconAssets: 'iconfont',
-  iconAssets: '//at.alicdn.com/t/c/font_4791007_tu166kux08.css',
+  iconAssets: '//at.alicdn.com/t/c/font_4791007_okdeb3ol9qj.css',
   
 
   logo: '/logo.svg',
@@ -38,11 +38,11 @@ export default hopeTheme({
       },
     },
   },
-
   encrypt: {
     config: {
-      '/intro/encrypt.html': ['1234'],
-      '/zh/intro/encrypt.html': ['1234'],
+      '/projectessay/practicalProjects/imageLibrary/10.Team Space.html': ['tim1234'],
+      '/projectessay/practicalProjects/imageLibrary/11.Collaborative photo editing.html': ['tim1234'],
+      '/projectessay/practicalProjects/flashSale/': ['tim1234'],
     },
   },
 

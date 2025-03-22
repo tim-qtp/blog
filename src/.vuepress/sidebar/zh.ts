@@ -358,9 +358,23 @@ export const zhSidebar = sidebar({
   ],
   "/life/": [
     {
-      icon: "java",
-      text: "一、碎嘴",
-      prefix: "life",
+      icon: "photo",
+      text: "摄影",
+      prefix: "photo",
+      children: "structure",
+      collapsible: true,
+    },
+    {
+      icon: "movie",
+      text: "读书与电影",
+      prefix: "movie",
+      children: "structure",
+      collapsible: true,
+    },
+    {
+      icon: "tech",
+      text: "科技",
+      prefix: "tech",
       children: "structure",
       collapsible: true,
     },
