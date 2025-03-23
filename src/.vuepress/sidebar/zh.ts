@@ -93,13 +93,13 @@ export const zhSidebar = sidebar({
           children: "structure",
           collapsible: true,
         },
-        {
-          icon: "leetcode",
-          text: "LeetCode刷题",
-          prefix: "leetcode",
-          children: "structure",
-          collapsible: true,
-        },
+        // {
+        //   icon: "leetcode",
+        //   text: "LeetCode刷题",
+        //   prefix: "leetcode",
+        //   children: "structure",
+        //   collapsible: true,
+        // },
         {
           icon: "git",
           text: "Git",
