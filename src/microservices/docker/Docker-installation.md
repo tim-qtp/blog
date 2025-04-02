@@ -38,7 +38,7 @@ yum remove docker \
                   docker-ce
 ```
 
-
+ [腾讯云安装 Docker 并配置镜像加速源](https://cloud.tencent.com/document/product/1207/45596?cps_key=1d358d18a7a17b4a6df8d67a62fd3d3d)
 
 ### 1.2.安装docker
 
