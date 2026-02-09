@@ -24,7 +24,7 @@ Compose文件是一个文本文件，通过指令定义集群中的每个容器�
 >
 > ==把各个run集合进来了，然后把语法转化了一下==
 
-![image-20230612180157251](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/c59470c80e2aa46b6d36eeff7339eef3.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/c59470c80e2aa46b6d36eeff7339eef3.png)
 
 ```json
 version: "3.8"
@@ -84,7 +84,7 @@ DockerCompose的详细语法参考官网：https://docs.docker.com/compose/compo
 
 查看资料里的cloud-demo文件夹，里面已经编写好了docker-compose文件，而且每个微服务都准备了一个独立的目录：
 
-![image-20210731181341330](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/b1d8835dc48f20ba70d4b1e8e2d39696.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/b1d8835dc48f20ba70d4b1e8e2d39696.png)
 
 内容如下：
 
@@ -133,11 +133,11 @@ services:
 
 查看mysql目录，可以看到其中已经准备好了cloud_order、cloud_user表：
 
-![image-20210801095205034](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/74040ab607f0210708c153fe4af45bd0.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/74040ab607f0210708c153fe4af45bd0.png)
 
 查看微服务目录，可以看到都包含Dockerfile文件：
 
-![image-20210801095320586](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/4a34d93847e833f6ac61b80f45c81c85.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/4a34d93847e833f6ac61b80f45c81c85.png)
 
 内容如下：
 
@@ -194,7 +194,7 @@ spring:
 
 打包后：
 
-![image-20210801095951030](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/024feff25e878d0fc9f7cfcae6ada228.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/024feff25e878d0fc9f7cfcae6ada228.png)
 
 ### 4.3.4.拷贝jar包到部署目录
 
@@ -202,15 +202,15 @@ spring:
 
 user-service：
 
-![image-20210801100201253](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/0304b372e05c9bf462eba03f9db0ae55.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/0304b372e05c9bf462eba03f9db0ae55.png)
 
 order-service：
 
-![image-20210801100231495](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/90abfd5879f4beeb39afff7457dd2581.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/90abfd5879f4beeb39afff7457dd2581.png)
 
 gateway：
 
-![image-20210801100308102](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/4999181643ef1b8826df9d1e70c1f7c9.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/4999181643ef1b8826df9d1e70c1f7c9.png)
 
 ### 4.3.5.部署
 
@@ -218,7 +218,7 @@ gateway：
 
 上传到任意目录：
 
-![image-20210801100955653](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/f26ba623a69b6b5d666b9a7aacd8494b.png)
+![](https://qtp-1324720525.cos.ap-shanghai.myqcloud.com/blog/f26ba623a69b6b5d666b9a7aacd8494b.png)
 
 部署：
 
@@ -227,6 +227,22 @@ gateway：
 ```sh
 docker-compose up -d
 ```
+
+
+
+:::tip
+
+如果一个项目中有很多`docker-compose.yml`，你就可以用`-f`来指定具体使用哪一个，比如`docker compose -f docker-compose.yml up -d`
+
+如果你当前目录下就只有一个 `docker-compose.yml`，你可以不用 `-f`，直接写：
+
+```bash
+docker compose up -d
+```
+
+但有多个文件时，就得明确指定了！
+
+:::
 
 
 
