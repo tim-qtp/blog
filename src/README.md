@@ -29,10 +29,10 @@ features:
     details: 主要用于Web应用程序的服务器端开发，可以与许多流行的框架和技术栈进行整合，如Spring、MyBatis等
     link: /java
 
-  - title: 大厂面试
-    icon: interview
-    details: 准备好，全面进阶；大厂面试，挑战不止，成功仅在一念之间
-    link: /interview
+  - title: AI
+    icon: robot
+    details: 大模型、Prompt、RAG、Agent 与落地实践，从基础到应用一站式学习
+    link: /ai/
 
 
   - title: 工作总结
