@@ -116,7 +116,177 @@ export const zhSidebar = sidebar({
       children: "structure",
       collapsible: true,
     },
-
+    {
+      icon: "robot",
+      text: "五、AI",
+      collapsible: true,
+      prefix: "ai/",
+      children: [
+        {
+          icon: "note",
+          text: "基础概念",
+          prefix: "basic/",
+          collapsible: true,
+          children: [
+            { text: "机器学习入门", prefix: "01-机器学习入门/", children: "structure", collapsible: true },
+            { text: "深度学习基础", prefix: "02-深度学习基础/", children: "structure", collapsible: true },
+            { text: "常用数学", prefix: "03-常用数学/", children: "structure", collapsible: true },
+            { text: "基本术语", prefix: "04-基本术语/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "model",
+          text: "大模型与 LLM",
+          prefix: "llm/",
+          collapsible: true,
+          children: [
+            { text: "Transformer", prefix: "01-Transformer/", children: "structure", collapsible: true },
+            { text: "GPT 与 Claude", prefix: "02-GPT与Claude/", children: "structure", collapsible: true },
+            { text: "上下文与幻觉", prefix: "03-上下文与幻觉/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "edit",
+          text: "Prompt 工程",
+          prefix: "prompt/",
+          collapsible: true,
+          children: [
+            { text: "提示模板", prefix: "01-提示模板/", children: "structure", collapsible: true },
+            { text: "Few-shot", prefix: "02-Few-shot/", children: "structure", collapsible: true },
+            { text: "CoT", prefix: "03-CoT/", children: "structure", collapsible: true },
+            { text: "角色设定", prefix: "04-角色设定/", children: "structure", collapsible: true },
+            { text: "输出格式控制", prefix: "05-输出格式控制/", children: "structure", collapsible: true },
+            { text: "常见坑", prefix: "06-常见坑/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "search",
+          text: "RAG 与检索",
+          prefix: "rag/",
+          collapsible: true,
+          children: [
+            { text: "文档切片", prefix: "01-文档切片/", children: "structure", collapsible: true },
+            { text: "向量库（Milvus/FAISS 等）", prefix: "02-向量库/", children: "structure", collapsible: true },
+            { text: "检索策略", prefix: "03-检索策略/", children: "structure", collapsible: true },
+            { text: "HyDE", prefix: "04-HyDE/", children: "structure", collapsible: true },
+            { text: "多路召回", prefix: "05-多路召回/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "config",
+          text: "Agent / 智能体",
+          prefix: "agent/",
+          collapsible: true,
+          children: [
+            { text: "ReAct", prefix: "01-ReAct/", children: "structure", collapsible: true },
+            { text: "Tool Use", prefix: "02-Tool-Use/", children: "structure", collapsible: true },
+            { text: "多 Agent", prefix: "03-多Agent/", children: "structure", collapsible: true },
+            { text: "LangGraph", prefix: "04-LangGraph/", children: "structure", collapsible: true },
+            { text: "实际案例", prefix: "05-实际案例/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "code",
+          text: "应用与落地",
+          prefix: "application/",
+          collapsible: true,
+          children: [
+            { text: "模型选型", prefix: "01-模型选型/", children: "structure", collapsible: true },
+            { text: "API 调用", prefix: "02-API调用/", children: "structure", collapsible: true },
+            { text: "LangChain 与 LlamaIndex", prefix: "03-LangChain与LlamaIndex/", children: "structure", collapsible: true },
+            { text: "与现有项目结合", prefix: "04-与现有项目结合/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "tool",
+          text: "工具与平台",
+          prefix: "tools/",
+          collapsible: true,
+          children: [
+            { text: "OpenAI API", prefix: "01-OpenAI-API/", children: "structure", collapsible: true },
+            { text: "Hugging Face", prefix: "02-Hugging-Face/", children: "structure", collapsible: true },
+            { text: "Ollama 与本地部署", prefix: "03-Ollama与本地部署/", children: "structure", collapsible: true },
+            { text: "向量库选型", prefix: "04-向量库选型/", children: "structure", collapsible: true },
+            { text: "评测与监控", prefix: "05-评测与监控/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "study",
+          text: "模型微调与训练",
+          prefix: "finetuning/",
+          collapsible: true,
+          children: [
+            { text: "LoRA / QLoRA", prefix: "01-LoRA与QLoRA/", children: "structure", collapsible: true },
+            { text: "全量微调", prefix: "02-全量微调/", children: "structure", collapsible: true },
+            { text: "数据构造", prefix: "03-数据构造/", children: "structure", collapsible: true },
+            { text: "评估与迭代", prefix: "04-评估与迭代/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "deploy",
+          text: "部署与推理",
+          prefix: "deployment/",
+          collapsible: true,
+          children: [
+            { text: "量化", prefix: "01-量化/", children: "structure", collapsible: true },
+            { text: "vLLM 与 llama.cpp", prefix: "02-vLLM与llama-cpp/", children: "structure", collapsible: true },
+            { text: "批处理", prefix: "03-批处理/", children: "structure", collapsible: true },
+            { text: "并发", prefix: "04-并发/", children: "structure", collapsible: true },
+            { text: "成本与延迟优化", prefix: "05-成本与延迟优化/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "pic",
+          text: "多模态",
+          prefix: "multimodal/",
+          collapsible: true,
+          children: [
+            { text: "视觉模型", prefix: "01-视觉模型/", children: "structure", collapsible: true },
+            { text: "图生图", prefix: "02-图生图/", children: "structure", collapsible: true },
+            { text: "语音", prefix: "03-语音/", children: "structure", collapsible: true },
+            { text: "视频理解 / 生成", prefix: "04-视频理解与生成/", children: "structure", collapsible: true },
+            { text: "多模态大模型", prefix: "05-多模态大模型/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "language",
+          text: "NLP 基础",
+          prefix: "nlp/",
+          collapsible: true,
+          children: [
+            { text: "分词", prefix: "01-分词/", children: "structure", collapsible: true },
+            { text: "NER", prefix: "02-NER/", children: "structure", collapsible: true },
+            { text: "分类", prefix: "03-分类/", children: "structure", collapsible: true },
+            { text: "序列模型", prefix: "04-序列模型/", children: "structure", collapsible: true },
+            { text: "与 LLM 的对比", prefix: "05-与LLM的对比/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "safe",
+          text: "评估与安全",
+          prefix: "evaluation/",
+          collapsible: true,
+          children: [
+            { text: "评测指标", prefix: "01-评测指标/", children: "structure", collapsible: true },
+            { text: "红队 / 对抗", prefix: "02-红队与对抗/", children: "structure", collapsible: true },
+            { text: "幻觉", prefix: "03-幻觉/", children: "structure", collapsible: true },
+            { text: "隐私", prefix: "04-隐私/", children: "structure", collapsible: true },
+            { text: "合规", prefix: "05-合规/", children: "structure", collapsible: true },
+          ],
+        },
+        {
+          icon: "read",
+          text: "论文与前沿",
+          prefix: "papers/",
+          collapsible: true,
+          children: [
+            { text: "重要论文笔记", prefix: "01-重要论文笔记/", children: "structure", collapsible: true },
+            { text: "新模型 / 新架构", prefix: "02-新模型与新架构/", children: "structure", collapsible: true },
+            { text: "行业动态", prefix: "03-行业动态/", children: "structure", collapsible: true },
+          ],
+        },
+      ]
+    },
     // {
     //   icon: "repair",
     //   text: "项目经验",
@@ -126,7 +296,7 @@ export const zhSidebar = sidebar({
     // },
     {
       icon: "framework",
-      text: "五、框架",
+      text: "六、框架",
       collapsible: true,
       prefix: "framework/",
       children: [
@@ -169,7 +339,7 @@ export const zhSidebar = sidebar({
     },
     {
       icon: "microservices",
-      text: "六、微服务中间件",
+      text: "七、微服务中间件",
       collapsible: true,
       prefix: "microservices/",
       children: [
@@ -219,14 +389,14 @@ export const zhSidebar = sidebar({
     },
     {
       icon: "interview",
-      text: "七、面试",
+      text: "八、面试",
       prefix: "interview/",
       children: "structure",
       collapsible: true,
     },
     {
       icon: "essay",
-      text: "八、项目随笔",
+      text: "九、项目随笔",
       prefix: "projectessay/",
       collapsible: true,
       children: [
@@ -312,14 +482,14 @@ export const zhSidebar = sidebar({
     },
     {
       icon: "github",
-      text: "九、开源推荐",
+      text: "十、开源推荐",
       prefix: "opensource/",
       collapsible: true,
       children: "structure"
     },
     {
       icon: "xiayu",
-      text: "十、技术琐碎",
+      text: "十一、技术琐碎",
       collapsible: true,
       prefix: "rain/",
       children: [
