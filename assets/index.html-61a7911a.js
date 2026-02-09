@@ -1,0 +1,1 @@
+import{_ as t,W as a,X as n,$ as e,a0 as s}from"./framework-6a3aa88c.js";const c={},o=e("h1",{id:"语音",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#语音","aria-hidden":"true"},"#"),s(" 语音")],-1),r=e("p",null,"待补充。",-1),_=[o,r];function d(i,l){return a(),n("div",null,_)}const f=t(c,[["render",d],["__file","index.html.vue"]]);export{f as default};

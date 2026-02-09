@@ -1,0 +1,1 @@
+import{_ as t,W as a,X as c,$ as e,a0 as n}from"./framework-6a3aa88c.js";const s={},d=e("h1",{id:"gpt-与-claude",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#gpt-与-claude","aria-hidden":"true"},"#"),n(" GPT 与 Claude")],-1),o=e("p",null,"待补充。",-1),r=[d,o];function _(l,i){return a(),c("div",null,r)}const u=t(s,[["render",_],["__file","index.html.vue"]]);export{u as default};

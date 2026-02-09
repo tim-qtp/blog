@@ -1,0 +1,1 @@
+import{_ as t,W as o,X as n,$ as e,a0 as _}from"./framework-6a3aa88c.js";const a={},s=e("h3",{id:"_1-字面量类型",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#_1-字面量类型","aria-hidden":"true"},"#"),_(" 1. 字面量类型")],-1),c=[s];function r(d,i){return o(),n("div",null,c)}const l=t(a,[["render",r],["__file","2.Continued Common Types.html.vue"]]);export{l as default};
