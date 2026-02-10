@@ -1,0 +1,1 @@
+import{_ as t,W as s,X as o,$ as e,a0 as a}from"./framework-28eb7fba.js";const n={},c=e("h1",{id:"few-shot",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#few-shot","aria-hidden":"true"},"#"),a(" Few-shot")],-1),r=e("p",null,"待补充。",-1),_=[c,r];function d(h,i){return s(),o("div",null,_)}const f=t(n,[["render",d],["__file","index.html.vue"]]);export{f as default};

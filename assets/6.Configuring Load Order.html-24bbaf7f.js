@@ -1,1 +1,0 @@
-import{_ as o,W as r,X as l,$ as e,a0 as n}from"./framework-6a3aa88c.js";const t={},_=e("ol",null,[e("li",null,[n("命令行参数，例如 "),e("code",null,"--server.port=8081")]),e("li",null,"properties文件"),e("li",null,"YAML文件")],-1),s=[_];function c(a,i){return r(),l("div",null,s)}const u=o(t,[["render",c],["__file","6.Configuring Load Order.html.vue"]]);export{u as default};

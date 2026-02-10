@@ -1,0 +1,1 @@
+import{_ as t,W as o,X as s,$ as e,a0 as a}from"./framework-28eb7fba.js";const n={},c=e("h1",{id:"tool-use",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#tool-use","aria-hidden":"true"},"#"),a(" Tool Use")],-1),r=e("p",null,"待补充。",-1),_=[c,r];function d(l,i){return o(),s("div",null,_)}const u=t(n,[["render",d],["__file","index.html.vue"]]);export{u as default};

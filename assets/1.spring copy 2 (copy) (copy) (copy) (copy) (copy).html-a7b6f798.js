@@ -1,0 +1,1 @@
+import{_,W as c,X as o,$ as e}from"./framework-28eb7fba.js";const p={},t=e("p",null,"待写⏳...",-1),s=[t];function n(r,y){return c(),o("div",null,s)}const l=_(p,[["render",n],["__file","1.spring copy 2 (copy) (copy) (copy) (copy) (copy).html.vue"]]);export{l as default};

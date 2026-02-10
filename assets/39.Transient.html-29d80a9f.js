@@ -1,0 +1,1 @@
+import{_ as n,W as t,X as s,$ as e}from"./framework-28eb7fba.js";const o={},_=e("p",null,"类似于Jackson中的@JsonIgnore注解",-1),c=e("p",null,"不过这个注解反序列化时会忽略该字段，而transient时反序列化时字段为默认值，例如基本数据类型为 0，引用类型为 null。",-1),r=[_,c];function a(l,i){return t(),s("div",null,r)}const u=n(o,[["render",a],["__file","39.Transient.html.vue"]]);export{u as default};

@@ -1,0 +1,1 @@
+import{_ as t,W as a,X as n,$ as e,a0 as s}from"./framework-28eb7fba.js";const c={},o=e("h1",{id:"hyde",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#hyde","aria-hidden":"true"},"#"),s(" HyDE")],-1),d=e("p",null,"待补充。",-1),r=[o,d];function _(i,h){return a(),n("div",null,r)}const f=t(c,[["render",_],["__file","index.html.vue"]]);export{f as default};

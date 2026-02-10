@@ -1,0 +1,1 @@
+import{_ as a,W as t,X as n,$ as e,a0 as o}from"./framework-28eb7fba.js";const s={},c=e("h1",{id:"openai-api",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#openai-api","aria-hidden":"true"},"#"),o(" OpenAI API")],-1),i=e("p",null,"待补充。",-1),r=[c,i];function _(d,l){return t(),n("div",null,r)}const p=a(s,[["render",_],["__file","index.html.vue"]]);export{p as default};

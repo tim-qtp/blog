@@ -1,1 +1,0 @@
-import{_ as a,W as o,X as t,$ as e,a0 as r}from"./framework-6a3aa88c.js";const n={},s=e("h1",{id:"lora-qlora",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#lora-qlora","aria-hidden":"true"},"#"),r(" LoRA / QLoRA")],-1),c=e("p",null,"待补充。",-1),_=[s,c];function d(l,i){return o(),t("div",null,_)}const f=a(n,[["render",d],["__file","index.html.vue"]]);export{f as default};
