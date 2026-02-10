@@ -30,7 +30,7 @@ features:
     link: /java
 
   - title: AI
-    icon: computer
+    icon: mdi:robot
     details: 大模型、Prompt、RAG、Agent 与落地实践，从基础到应用一站式学习
     link: /ai/
 

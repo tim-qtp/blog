@@ -10,8 +10,11 @@ export default hopeTheme({
     url: 'https://github.com/tim-qtp/',
   },
 
-  // iconAssets: 'iconfont',
-  iconAssets: '//at.alicdn.com/t/c/font_4791007_okdeb3ol9qj.css',
+  // 同时支持自定义 iconfont 和 Iconify（用于 AI 模块等）
+  iconAssets: [
+    '//at.alicdn.com/t/c/font_4791007_okdeb3ol9qj.css',
+    'iconify'
+  ],
   
 
   logo: '/logo.svg',
