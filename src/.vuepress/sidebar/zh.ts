@@ -170,6 +170,7 @@ export const zhSidebar = sidebar({
             { icon: "gateway", text: "检索策略", prefix: "03-检索策略/", children: "structure", collapsible: true },
             { icon: "git", text: "HyDE", prefix: "04-HyDE/", children: "structure", collapsible: true },
             { icon: "microservices", text: "多路召回", prefix: "05-多路召回/", children: "structure", collapsible: true },
+            { icon: "rocket", text: "Rerank", prefix: "06-Rerank/", children: "structure", collapsible: true },
           ],
         },
         {
