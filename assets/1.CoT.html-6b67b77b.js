@@ -1,0 +1,1 @@
+import{_ as t,W as o,X as a,$ as e,a0 as c}from"./framework-6a3aa88c.js";const s={},_=e("h1",{id:"cot-思维链",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#cot-思维链","aria-hidden":"true"},"#"),c(" CoT（思维链）")],-1),n=e("p",null,"待补充。",-1),r=[_,n];function d(i,l){return o(),a("div",null,r)}const f=t(s,[["render",d],["__file","1.CoT.html.vue"]]);export{f as default};

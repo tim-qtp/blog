@@ -1,0 +1,1 @@
+import{_,W as t,X as a,$ as e,a0 as s}from"./framework-6a3aa88c.js";const c={},o=e("h1",{id:"成本与延迟优化",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#成本与延迟优化","aria-hidden":"true"},"#"),s(" 成本与延迟优化")],-1),n=e("p",null,"待补充。",-1),r=[o,n];function d(i,l){return t(),a("div",null,r)}const f=_(c,[["render",d],["__file","1.成本与延迟优化.html.vue"]]);export{f as default};

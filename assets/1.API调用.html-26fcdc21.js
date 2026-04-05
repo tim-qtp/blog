@@ -1,0 +1,1 @@
+import{_ as t,W as a,X as _,$ as e,a0 as s}from"./framework-6a3aa88c.js";const c={},o=e("h1",{id:"api-调用",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#api-调用","aria-hidden":"true"},"#"),s(" API 调用")],-1),n=e("p",null,"待补充。",-1),r=[o,n];function d(i,l){return a(),_("div",null,r)}const f=t(c,[["render",d],["__file","1.API调用.html.vue"]]);export{f as default};

@@ -1,0 +1,1 @@
+import{_ as t,W as a,X as n,$ as e,a0 as r}from"./framework-6a3aa88c.js";const s={},_=e("h1",{id:"ner",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#ner","aria-hidden":"true"},"#"),r(" NER")],-1),c=e("p",null,"待补充。",-1),o=[_,c];function d(i,l){return a(),n("div",null,o)}const f=t(s,[["render",d],["__file","1.NER.html.vue"]]);export{f as default};

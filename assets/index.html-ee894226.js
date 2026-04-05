@@ -1,1 +1,0 @@
-import{_ as r,W as t,X as a,$ as e,a0 as n}from"./framework-6a3aa88c.js";const s={},o=e("h1",{id:"transformer",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#transformer","aria-hidden":"true"},"#"),n(" Transformer")],-1),c=e("p",null,"待补充。",-1),_=[o,c];function d(i,l){return t(),a("div",null,_)}const h=r(s,[["render",d],["__file","index.html.vue"]]);export{h as default};

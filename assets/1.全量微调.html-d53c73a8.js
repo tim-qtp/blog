@@ -1,0 +1,1 @@
+import{_ as t,W as _,X as a,$ as e,a0 as s}from"./framework-6a3aa88c.js";const c={},o=e("h1",{id:"全量微调",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#全量微调","aria-hidden":"true"},"#"),s(" 全量微调")],-1),n=e("p",null,"待补充。",-1),r=[o,n];function d(i,l){return _(),a("div",null,r)}const f=t(c,[["render",d],["__file","1.全量微调.html.vue"]]);export{f as default};

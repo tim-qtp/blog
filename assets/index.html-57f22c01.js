@@ -1,1 +1,0 @@
-import{_ as a,W as t,X as o,$ as e,a0 as n}from"./framework-6a3aa88c.js";const s={},c=e("h1",{id:"ollama-与本地部署",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#ollama-与本地部署","aria-hidden":"true"},"#"),n(" Ollama 与本地部署")],-1),l=e("p",null,"待补充。",-1),r=[c,l];function _(d,i){return t(),o("div",null,r)}const m=a(s,[["render",_],["__file","index.html.vue"]]);export{m as default};
