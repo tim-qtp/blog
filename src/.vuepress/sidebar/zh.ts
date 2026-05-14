@@ -166,7 +166,7 @@ export const zhSidebar = sidebar({
           collapsible: true,
           children: [
             { icon: "scaffold", text: "文档切片", prefix: "01-文档切片/", children: "structure", collapsible: true },
-            { icon: "redis", text: "向量库（Milvus/FAISS 等）", prefix: "02-向量库/", children: "structure", collapsible: true },
+            { icon: "redis", text: "向量库", prefix: "02-向量库/", children: "structure", collapsible: true },
             { icon: "gateway", text: "检索策略", prefix: "03-检索策略/", children: "structure", collapsible: true },
             { icon: "git", text: "HyDE", prefix: "04-HyDE/", children: "structure", collapsible: true },
             { icon: "microservices", text: "多路召回", prefix: "05-多路召回/", children: "structure", collapsible: true },
