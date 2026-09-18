@@ -1,0 +1,1 @@
+import{_ as t,W as n,X as _,$ as e,a0 as a}from"./framework-6a3aa88c.js";const s={},c=e("h1",{id:"linux系统",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#linux系统","aria-hidden":"true"},"#"),a(" Linux系统")],-1),o=e("p",null,"待补充。",-1),r=[c,o];function i(d,l){return n(),_("div",null,r)}const h=t(s,[["render",i],["__file","1.Linux系统.html.vue"]]);export{h as default};
