@@ -286,6 +286,23 @@ export const zhSidebar = sidebar({
             { icon: "discover", text: "行业动态", prefix: "03-行业动态/", children: "structure", collapsible: true },
           ],
         },
+        {
+          icon: "linux",
+          text: "综合运维",
+          prefix: "ops/",
+          collapsible: true,
+          children: [
+            { icon: "computer", text: "带外管理", prefix: "01-带外管理/", children: "structure", collapsible: true },
+            { icon: "linux", text: "Linux 系统", prefix: "02-Linux系统/", children: "structure", collapsible: true },
+            { icon: "network", text: "网络运维", prefix: "03-网络运维/", children: "structure", collapsible: true },
+            { icon: "collections", text: "存储与备份", prefix: "04-存储与备份/", children: "structure", collapsible: true },
+            { icon: "rocket", text: "监控告警", prefix: "05-监控告警/", children: "structure", collapsible: true },
+            { icon: "docker", text: "容器与编排", prefix: "06-容器与编排/", children: "structure", collapsible: true },
+            { icon: "scaffold", text: "自动化运维", prefix: "07-自动化运维/", children: "structure", collapsible: true },
+            { icon: "encryption", text: "安全加固", prefix: "08-安全加固/", children: "structure", collapsible: true },
+            { icon: "bug", text: "故障排查", prefix: "09-故障排查/", children: "structure", collapsible: true },
+          ],
+        },
       ]
     },
     // {
