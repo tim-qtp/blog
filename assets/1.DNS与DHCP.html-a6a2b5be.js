@@ -1,0 +1,1 @@
+import{_ as t,W as s,X as a,$ as e,a0 as c}from"./framework-6a3aa88c.js";const _={},n=e("h1",{id:"dns与dhcp",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#dns与dhcp","aria-hidden":"true"},"#"),c(" DNS与DHCP")],-1),o=e("p",null,"待补充。",-1),d=[n,o];function r(h,i){return s(),a("div",null,d)}const f=t(_,[["render",r],["__file","1.DNS与DHCP.html.vue"]]);export{f as default};

@@ -1,0 +1,1 @@
+import{_ as t,W as _,X as a,$ as e,a0 as n}from"./framework-6a3aa88c.js";const s={},c=e("h1",{id:"vpn与隧道",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#vpn与隧道","aria-hidden":"true"},"#"),n(" VPN与隧道")],-1),o=e("p",null,"待补充。",-1),r=[c,o];function d(i,l){return _(),a("div",null,r)}const f=t(s,[["render",d],["__file","1.VPN与隧道.html.vue"]]);export{f as default};
