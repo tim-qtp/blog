@@ -296,7 +296,22 @@ export const zhSidebar = sidebar({
       children: [
         { icon: "computer", text: "带外管理", prefix: "01-带外管理/", children: "structure", collapsible: true },
         { icon: "linux", text: "Linux 系统", prefix: "02-Linux系统/", children: "structure", collapsible: true },
-        { icon: "network", text: "网络运维", prefix: "03-网络运维/", children: "structure", collapsible: true },
+        {
+          icon: "network",
+          text: "网络运维",
+          prefix: "03-网络运维/",
+          collapsible: true,
+          children: [
+            { icon: "basis", text: "TCP/IP 与协议基础", prefix: "01-TCPIP与协议基础/", children: "structure", collapsible: true },
+            { icon: "network", text: "路由与交换", prefix: "02-路由与交换/", children: "structure", collapsible: true },
+            { icon: "discover", text: "DNS 与 DHCP", prefix: "03-DNS与DHCP/", children: "structure", collapsible: true },
+            { icon: "encryption", text: "防火墙与 NAT", prefix: "04-防火墙与NAT/", children: "structure", collapsible: true },
+            { icon: "gateway", text: "负载均衡", prefix: "05-负载均衡/", children: "structure", collapsible: true },
+            { icon: "clash", text: "VPN 与隧道", prefix: "06-VPN与隧道/", children: "structure", collapsible: true },
+            { icon: "bug", text: "抓包与排障", prefix: "07-抓包与排障/", children: "structure", collapsible: true },
+            { icon: "rocket", text: "链路与带宽", prefix: "08-链路与带宽/", children: "structure", collapsible: true },
+          ],
+        },
         { icon: "collections", text: "存储与备份", prefix: "04-存储与备份/", children: "structure", collapsible: true },
         { icon: "rocket", text: "监控告警", prefix: "05-监控告警/", children: "structure", collapsible: true },
         { icon: "docker", text: "容器与编排", prefix: "06-容器与编排/", children: "structure", collapsible: true },
