@@ -1,6 +1,6 @@
 ---
-order: 5
-title: "第三课：看懂第一份 Kubernetes YAML"
+order: 3
+title: "3. 看懂第一份 Kubernetes YAML"
 category:
   - 综合运维
   - 容器与编排

@@ -1,6 +1,6 @@
 ---
-order: 7
-title: "第五课：Pod 生命周期与第一次故障排查"
+order: 5
+title: "5. Pod 生命周期与第一次故障排查"
 category:
   - 综合运维
   - 容器与编排

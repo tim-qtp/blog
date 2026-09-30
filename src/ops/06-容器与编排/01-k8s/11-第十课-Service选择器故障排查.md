@@ -1,6 +1,6 @@
 ---
-order: 12
-title: "第十课：Service 选择器故障排查"
+order: 10
+title: "10. Service 选择器故障排查"
 category:
   - 综合运维
   - 容器与编排

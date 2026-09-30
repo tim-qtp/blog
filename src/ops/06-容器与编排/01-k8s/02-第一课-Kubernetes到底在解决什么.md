@@ -1,6 +1,6 @@
 ---
-order: 3
-title: "第一课：Kubernetes 到底在解决什么"
+order: 1
+title: "1. Kubernetes 到底在解决什么"
 category:
   - 综合运维
   - 容器与编排

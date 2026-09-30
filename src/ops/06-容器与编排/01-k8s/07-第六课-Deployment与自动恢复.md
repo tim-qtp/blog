@@ -1,6 +1,6 @@
 ---
-order: 8
-title: "第六课：Deployment 与自动恢复"
+order: 6
+title: "6. Deployment 与自动恢复"
 category:
   - 综合运维
   - 容器与编排

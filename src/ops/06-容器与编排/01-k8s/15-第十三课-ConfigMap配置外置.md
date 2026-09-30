@@ -1,6 +1,6 @@
 ---
-order: 16
-title: "第十三课：ConfigMap 配置外置"
+order: 14
+title: "13. ConfigMap 配置外置"
 category:
   - 综合运维
   - 容器与编排

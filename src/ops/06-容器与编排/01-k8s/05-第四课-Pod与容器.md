@@ -1,6 +1,6 @@
 ---
-order: 6
-title: "第四课：Pod 和容器到底是什么关系"
+order: 4
+title: "4. Pod 和容器到底是什么关系"
 category:
   - 综合运维
   - 容器与编排

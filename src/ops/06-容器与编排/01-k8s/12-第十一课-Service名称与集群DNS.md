@@ -1,6 +1,6 @@
 ---
-order: 13
-title: "第十一课：Service 名称与集群 DNS"
+order: 11
+title: "11. Service 名称与集群 DNS"
 category:
   - 综合运维
   - 容器与编排

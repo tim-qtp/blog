@@ -1,6 +1,6 @@
 ---
-order: 14
-title: "第十二课：Namespace 环境隔离"
+order: 12
+title: "12. Namespace 环境隔离"
 category:
   - 综合运维
   - 容器与编排

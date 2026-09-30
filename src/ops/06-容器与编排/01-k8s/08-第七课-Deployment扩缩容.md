@@ -1,6 +1,6 @@
 ---
-order: 9
-title: "第七课：Deployment 扩缩容"
+order: 7
+title: "7. Deployment 扩缩容"
 category:
   - 综合运维
   - 容器与编排
