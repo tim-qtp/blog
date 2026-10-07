@@ -1,0 +1,170 @@
+import{_ as e,W as n,X as a,a2 as s}from"./framework-6a3aa88c.js";const i={},l=s(`<h1 id="第十课-service-选择器故障排查" tabindex="-1"><a class="header-anchor" href="#第十课-service-选择器故障排查" aria-hidden="true">#</a> 第十课：Service 选择器故障排查</h1><h2 id="一、贴近实际的业务场景" tabindex="-1"><a class="header-anchor" href="#一、贴近实际的业务场景" aria-hidden="true">#</a> 一、贴近实际的业务场景</h2><p>我们正在部署一个虚构的在线商城，项目名叫“青云商城”：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>qingyun-mall
+├── qingyun-mall-web：商城前台
+├── product-api：商品接口
+└── order-api：订单接口
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>本课只部署商城前台。资源和标签这样设计：</p><table><thead><tr><th>配置位置</th><th>值</th><th>业务含义</th></tr></thead><tbody><tr><td>Deployment name</td><td><code>qingyun-mall-web</code></td><td>负责运行商城前台 Web Pod</td></tr><tr><td>Service name</td><td><code>qingyun-mall-web</code></td><td>商城前台的稳定访问入口</td></tr><tr><td>Label <code>app</code></td><td><code>qingyun-mall</code></td><td>属于青云商城系统</td></tr><tr><td>Label <code>tier</code></td><td><code>frontend</code></td><td>属于前端层</td></tr><tr><td>Label <code>environment</code></td><td><code>development</code></td><td>当前属于开发环境</td></tr></tbody></table><p>这里不会把所有值写成同一个名字：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>metadata.name：这个具体资源是谁
+app：它属于哪个系统
+tier：它属于前端层还是后端层
+environment：它属于哪个环境
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="二、本课故障" tabindex="-1"><a class="header-anchor" href="#二、本课故障" aria-hidden="true">#</a> 二、本课故障</h2><p>商城前台 Pod 拥有：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>app=qingyun-mall
+tier=frontend
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>但 <code>qingyun-mall-web</code> Service 被误配置为：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>app=qingyun-mall
+tier=backend
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>Service 本来应该寻找商城前台，却错误地寻找后端层。</p><p>最终现象：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>Pod：全部 Running
+Service：创建成功
+访问：失败
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="三、创建商城前台" tabindex="-1"><a class="header-anchor" href="#三、创建商城前台" aria-hidden="true">#</a> 三、创建商城前台</h2><p>进入项目目录：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code><span class="token builtin class-name">cd</span> /Users/qintianpeng/2026/code/k8s
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>Deployment 文件为 <code>labs/08-Service排障/01-nginx-deployment.yaml</code>。在线阅读时，请先保存下面的完整内容：</p><div class="language-yaml line-numbers-mode" data-ext="yml"><pre class="language-yaml"><code><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall<span class="token punctuation">-</span>web
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall
+    <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span> development
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall
+      <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall
+        <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+        <span class="token key atrule">environment</span><span class="token punctuation">:</span> development
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
+          <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.27</span>
+          <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>如果目录不存在，先执行：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> labs/08-Service排障
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>创建 Deployment：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl apply <span class="token parameter variable">-f</span> labs/08-Service排障/01-nginx-deployment.yaml
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>等待完成：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl rollout status deployment/qingyun-mall-web
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查看商城前台 Pod：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl get pods <span class="token parameter variable">-l</span> <span class="token string">&#39;app=qingyun-mall,tier=frontend&#39;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>应看到两个 <code>1/1 Running</code> Pod。这证明商城前台实例本身已经运行。</p><h2 id="四、查看-pod-的业务标签" tabindex="-1"><a class="header-anchor" href="#四、查看-pod-的业务标签" aria-hidden="true">#</a> 四、查看 Pod 的业务标签</h2><p>执行：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl get pods <span class="token punctuation">\\</span>
+  <span class="token parameter variable">-l</span> <span class="token string">&#39;app=qingyun-mall,tier=frontend&#39;</span> <span class="token punctuation">\\</span>
+  --show-labels
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>可以看到：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>app=qingyun-mall,tier=frontend,environment=development
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>逗号表示条件同时成立：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>属于 qingyun-mall
+并且属于 frontend 层
+并且属于 development 环境
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="五、创建配置错误的-service" tabindex="-1"><a class="header-anchor" href="#五、创建配置错误的-service" aria-hidden="true">#</a> 五、创建配置错误的 Service</h2><p>错误文件：<code>labs/08-Service排障/02-错误选择器-service.yaml</code></p><p>完整内容如下，其中错误点是 <code>tier: backend</code>：</p><div class="language-yaml line-numbers-mode" data-ext="yml"><pre class="language-yaml"><code><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall<span class="token punctuation">-</span>web
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall
+    <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span> development
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall
+    <span class="token key atrule">tier</span><span class="token punctuation">:</span> backend
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> http
+      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">80</span>
+      <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>请把它保存到上面给出的错误文件路径。</p><p>创建：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl apply <span class="token parameter variable">-f</span> labs/08-Service排障/02-错误选择器-service.yaml
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>仍然会成功：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>service/qingyun-mall-web created
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="六、为什么-kubernetes-不阻止这个错误" tabindex="-1"><a class="header-anchor" href="#六、为什么-kubernetes-不阻止这个错误" aria-hidden="true">#</a> 六、为什么 Kubernetes 不阻止这个错误</h2><p><code>tier: backend</code> 在格式上完全合法。</p><p>Kubernetes 不理解商城的业务设计，不知道名为 <code>qingyun-mall-web</code> 的 Service 应该连接前端层，而不是后端层。</p><p>而且 Service 暂时没有后端也可能是正常的，例如 Service 先部署、Pod 稍后才上线。</p><p>所以必须区分：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>Kubernetes 接受配置
+不等于
+配置符合业务意图
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="七、确认表面现象" tabindex="-1"><a class="header-anchor" href="#七、确认表面现象" aria-hidden="true">#</a> 七、确认表面现象</h2><p>查看 Pod：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl get pods <span class="token parameter variable">-l</span> <span class="token string">&#39;app=qingyun-mall,tier=frontend&#39;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>两个 Pod 都是 Running。</p><p>查看 Service：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl get <span class="token function">service</span> qingyun-mall-web
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>Service 也存在并拥有 ClusterIP。</p><p>但还没有证明 Service 找到了后端。</p><h2 id="八、检查-endpoints" tabindex="-1"><a class="header-anchor" href="#八、检查-endpoints" aria-hidden="true">#</a> 八、检查 Endpoints</h2><p>执行：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl describe <span class="token function">service</span> qingyun-mall-web
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>重点看：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>Selector:  app=qingyun-mall,tier=backend
+Endpoints:
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>某些环境可能显示：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>Endpoints: &lt;none&gt;
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>空白和 <code>&lt;none&gt;</code> 含义相同：Service 当前没有后端地址。</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>调用方
+  ↓
+Service qingyun-mall-web
+  ↓
+没有匹配的 Pod
+  ✕
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="九、为什么-pod-running-也没用" tabindex="-1"><a class="header-anchor" href="#九、为什么-pod-running-也没用" aria-hidden="true">#</a> 九、为什么 Pod Running 也没用</h2><p>Pod Running 只说明容器运行了。</p><p>它不能证明 Service selector 能选中这些 Pod。</p><p>需要分两层检查：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>第一层：Pod 自己是否正常
+第二层：Service 是否与 Pod 建立联系
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>本次第一层正常，第二层失败。</p><h2 id="十、并排比较-selector-与-label" tabindex="-1"><a class="header-anchor" href="#十、并排比较-selector-与-label" aria-hidden="true">#</a> 十、并排比较 selector 与 Label</h2><p>Service selector：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl describe <span class="token function">service</span> qingyun-mall-web
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>得到：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>app=qingyun-mall,tier=backend
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>Pod Label：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl get pods <span class="token parameter variable">-l</span> <span class="token assign-left variable">app</span><span class="token operator">=</span>qingyun-mall --show-labels
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>得到：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>app=qingyun-mall,tier=frontend,environment=development
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>并排比较：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>Service selector：app=qingyun-mall, tier=backend
+Pod Label：       app=qingyun-mall, tier=frontend
+                                       ↑
+                                  层级不一致
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>根因已经确定：商城前台 Service 错选了后端层。</p><h2 id="十一、直接验证-selector" tabindex="-1"><a class="header-anchor" href="#十一、直接验证-selector" aria-hidden="true">#</a> 十一、直接验证 selector</h2><p>把 Service selector 原样放进查询：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl get pods <span class="token parameter variable">-l</span> <span class="token string">&#39;app=qingyun-mall,tier=backend&#39;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>应该显示：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>No resources found
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>再查询正确层级：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl get pods <span class="token parameter variable">-l</span> <span class="token string">&#39;app=qingyun-mall,tier=frontend&#39;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>可以找到两个 Pod。</p><p>这是非常实用的排查方法：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>复制 Service selector
+       ↓
+放进 kubectl get pods -l
+       ↓
+确认它实际能选中谁
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="十二、修正-service" tabindex="-1"><a class="header-anchor" href="#十二、修正-service" aria-hidden="true">#</a> 十二、修正 Service</h2><p>正确文件：<code>labs/08-Service排障/03-正确选择器-service.yaml</code></p><p>完整的正确文件如下：</p><div class="language-yaml line-numbers-mode" data-ext="yml"><pre class="language-yaml"><code><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall<span class="token punctuation">-</span>web
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall
+    <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span> development
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall
+    <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> http
+      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">80</span>
+      <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>请把它保存到上面给出的正确文件路径。</p><p>应用修复：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl apply <span class="token parameter variable">-f</span> labs/08-Service排障/03-正确选择器-service.yaml
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>同名 Service 已存在，所以通常输出：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>service/qingyun-mall-web configured
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><code>configured</code> 表示原对象被更新，不是创建了第二个 Service。</p><h2 id="十三、确认-endpoints-恢复" tabindex="-1"><a class="header-anchor" href="#十三、确认-endpoints-恢复" aria-hidden="true">#</a> 十三、确认 Endpoints 恢复</h2><p>再次执行：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl describe <span class="token function">service</span> qingyun-mall-web
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>现在应该看到：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>Selector:  app=qingyun-mall,tier=frontend
+Endpoints: 10.1.0.x:80,10.1.0.y:80
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>链路已经恢复：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>Service qingyun-mall-web
+选择 app=qingyun-mall,tier=frontend
+                 ↓
+两个商城前台 Web Pod
+                 ↓
+Endpoints 出现两个地址
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>整个修复过程不需要重启 Pod。</p><h2 id="十四、实际访问" tabindex="-1"><a class="header-anchor" href="#十四、实际访问" aria-hidden="true">#</a> 十四、实际访问</h2><p>建立临时通道：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl port-forward service/qingyun-mall-web <span class="token number">18080</span>:80
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>等待出现：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>Forwarding from 127.0.0.1:18080 -&gt; 80
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>浏览器访问：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>http://127.0.0.1:18080
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>看到 Nginx 欢迎页，证明请求已经通过 Service 到达商城前台 Web Pod。</p><p>完成后按 <code>Control + C</code>。</p><h2 id="十五、分清三个位置" tabindex="-1"><a class="header-anchor" href="#十五、分清三个位置" aria-hidden="true">#</a> 十五、分清三个位置</h2><h3 id="metadata-name" tabindex="-1"><a class="header-anchor" href="#metadata-name" aria-hidden="true">#</a> <code>metadata.name</code></h3><div class="language-yaml line-numbers-mode" data-ext="yml"><pre class="language-yaml"><code><span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall<span class="token punctuation">-</span>web
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>回答：这个具体 Deployment 叫什么？</p><h3 id="metadata-labels" tabindex="-1"><a class="header-anchor" href="#metadata-labels" aria-hidden="true">#</a> <code>metadata.labels</code></h3><div class="language-yaml line-numbers-mode" data-ext="yml"><pre class="language-yaml"><code><span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall
+    <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span> development
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>回答：这个对象具有什么业务属性？</p><h3 id="spec-selector" tabindex="-1"><a class="header-anchor" href="#spec-selector" aria-hidden="true">#</a> <code>spec.selector</code></h3><div class="language-yaml line-numbers-mode" data-ext="yml"><pre class="language-yaml"><code><span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> qingyun<span class="token punctuation">-</span>mall
+    <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>回答：我要选择具有什么属性的 Pod？</p><p>压缩成：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>metadata.name：我是谁
+metadata.labels：我有哪些属性
+spec.selector：我要选择谁
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="十六、固定排障顺序" tabindex="-1"><a class="header-anchor" href="#十六、固定排障顺序" aria-hidden="true">#</a> 十六、固定排障顺序</h2><p>遇到 Service 不通，按顺序检查：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>1. Pod 是否 Running / Ready？
+   kubectl get pods
+
+2. Service 是否存在？
+   kubectl get service
+
+3. Service 是否有 Endpoints？
+   kubectl describe service
+
+4. selector 与 Pod Label 是否一致？
+   kubectl describe service
+   kubectl get pods --show-labels
+
+5. 把 selector 放入 -l 查询验证
+
+6. 修复后执行真实请求
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>不要一上来重启 Pod。重启不会修正错误 selector。</p><h2 id="十七、清理实验" tabindex="-1"><a class="header-anchor" href="#十七、清理实验" aria-hidden="true">#</a> 十七、清理实验</h2><p>删除 Service：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl delete <span class="token parameter variable">-f</span> labs/08-Service排障/03-正确选择器-service.yaml
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>删除 Deployment：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl delete <span class="token parameter variable">-f</span> labs/08-Service排障/01-nginx-deployment.yaml
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>确认：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl get deployment,replicaset,service,pod <span class="token punctuation">\\</span>
+  <span class="token parameter variable">-l</span> <span class="token string">&#39;app=qingyun-mall,tier=frontend&#39;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>Pod 可能短暂显示 <code>Terminating</code>。稍等后再次查询，最终没有资源表示清理完成。</p><h2 id="十八、问题与直接回答" tabindex="-1"><a class="header-anchor" href="#十八、问题与直接回答" aria-hidden="true">#</a> 十八、问题与直接回答</h2><h3 id="service-创建成功为什么仍可能不通" tabindex="-1"><a class="header-anchor" href="#service-创建成功为什么仍可能不通" aria-hidden="true">#</a> Service 创建成功为什么仍可能不通？</h3><p>创建成功只说明格式合法。selector 可能没有匹配任何 Pod。</p><h3 id="pod-全部-running-为什么-service-仍不通" tabindex="-1"><a class="header-anchor" href="#pod-全部-running-为什么-service-仍不通" aria-hidden="true">#</a> Pod 全部 Running 为什么 Service 仍不通？</h3><p>Pod 自己运行正常，与 Service 是否选中它们是两个不同层次。</p><h3 id="endpoints-为空表示什么" tabindex="-1"><a class="header-anchor" href="#endpoints-为空表示什么" aria-hidden="true">#</a> Endpoints 为空表示什么？</h3><p>表示 Service 当前没有可以接收请求的后端地址。</p><h3 id="为什么-tier-backend-不匹配-tier-frontend" tabindex="-1"><a class="header-anchor" href="#为什么-tier-backend-不匹配-tier-frontend" aria-hidden="true">#</a> 为什么 <code>tier=backend</code> 不匹配 <code>tier=frontend</code>？</h3><p>Label selector 是精确匹配，不会根据资源名字猜测业务意图。</p><h3 id="怎样快速验证-selector" tabindex="-1"><a class="header-anchor" href="#怎样快速验证-selector" aria-hidden="true">#</a> 怎样快速验证 selector？</h3><p>把 selector 放进查询命令：</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>kubectl get pods <span class="token parameter variable">-l</span> <span class="token string">&#39;app=qingyun-mall,tier=frontend&#39;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="修正-selector-后需要重启-pod-吗" tabindex="-1"><a class="header-anchor" href="#修正-selector-后需要重启-pod-吗" aria-hidden="true">#</a> 修正 selector 后需要重启 Pod 吗？</h3><p>通常不需要。Service 会重新匹配已有 Pod，Endpoints 会自动更新。</p><h2 id="本课只记住五句话" tabindex="-1"><a class="header-anchor" href="#本课只记住五句话" aria-hidden="true">#</a> 本课只记住五句话</h2><ol><li>资源名表达具体组件，Label 表达稳定的业务属性。</li><li>Service 使用 <code>spec.selector</code> 精确匹配 Pod Label。</li><li>Pod Running 不代表 Service 链路正常。</li><li>Endpoints 为空表示 Service 当前没有后端。</li><li>把 selector 放进 <code>kubectl get pods -l</code> 可以直接验证选择结果。</li></ol><h2 id="下一课预告" tabindex="-1"><a class="header-anchor" href="#下一课预告" aria-hidden="true">#</a> 下一课预告</h2><p>下一课学习集群 DNS。我们会创建一个临时客户端 Pod，不记 Service 的 ClusterIP，而是直接通过 <code>http://qingyun-mall-web</code> 访问商城前台。</p>`,166),d=[l];function t(c,r){return n(),a("div",null,d)}const u=e(i,[["render",t],["__file","11-第十课-Service选择器故障排查.html.vue"]]);export{u as default};
