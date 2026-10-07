@@ -8,12 +8,6 @@ category:
 ---
 # 第一课：Kubernetes 到底在解决什么
 
-> 本课只观察，不创建、不修改、不删除任何集群对象。
-
-## 本课目标
-
-学完后，你应当能回答：
-
 1. Docker 已经能启动容器，为什么还需要 Kubernetes？
 2. `kubectl` 把请求发给谁？
 3. 控制面和 Node 分别负责什么？
@@ -99,13 +93,83 @@ kube-apiserver ───→ etcd
 
 ### 0. 运行预检脚本
 
-在仓库根目录执行：
+如果你正在使用本课程仓库，可以在仓库根目录执行：
 
 ```bash
 bash labs/00-环境预检.sh
 ```
 
-它只执行读取命令。先确认最后显示“基础实验环境可用”，再继续。
+如果你阅读的是在线笔记，没有本地课程仓库，请新建一个名为 `00-环境预检.sh` 的文件，并复制下面的完整内容：
+
+```bash
+#!/usr/bin/env bash
+
+set -u
+
+failures=0
+
+check_command() {
+  if command -v "$1" >/dev/null 2>&1; then
+    printf '[OK]   找到命令: %s\n' "$1"
+  else
+    printf '[FAIL] 缺少命令: %s\n' "$1"
+    failures=$((failures + 1))
+  fi
+}
+
+printf 'Kubernetes 课程环境预检（只读）\n\n'
+
+check_command docker
+check_command kubectl
+
+if ! command -v kubectl >/dev/null 2>&1; then
+  printf '\nFAIL：请先安装并配置 kubectl。\n'
+  exit 1
+fi
+
+printf '\n当前 context:\n'
+if ! kubectl config current-context; then
+  failures=$((failures + 1))
+fi
+
+printf '\nkubectl 客户端版本:\n'
+if ! kubectl version --client; then
+  failures=$((failures + 1))
+fi
+
+printf '\n集群 Node:\n'
+if ! kubectl get nodes -o wide; then
+  failures=$((failures + 1))
+fi
+
+printf '\n当前权限快速检查:\n'
+if kubectl auth can-i get pods --all-namespaces >/dev/null 2>&1; then
+  printf '[OK]   API 可访问，能够读取 Pod\n'
+else
+  printf '[FAIL] 无法读取 Pod，请检查 context、集群状态或权限\n'
+  failures=$((failures + 1))
+fi
+
+if [ "$failures" -eq 0 ]; then
+  printf '\nPASS：Kubernetes 基础实验环境可用。\n'
+  exit 0
+fi
+
+printf '\nFAIL：预检发现 %s 项问题，请先根据上方输出定位。\n' "$failures"
+exit 1
+```
+
+保存后，在该文件所在目录执行：
+
+```bash
+bash 00-环境预检.sh
+```
+
+这个脚本只读取本机命令、当前 Kubernetes context、客户端版本、Node 状态和 Pod 读取权限，不会创建、修改或删除集群资源。最后看到下面的输出，才说明可以继续本课：
+
+```text
+PASS：Kubernetes 基础实验环境可用。
+```
 
 ### 1. 确认 kubectl 正在操作哪个集群
 
@@ -118,7 +182,7 @@ kubectl config current-context
 再看 kubectl 请求的控制面地址：
 
 ```bash
-kubectl cluster-info
+  kubectl cluster-info
 ```
 
 你看到的 Kubernetes control plane 地址，就是当前 context 中 kube-apiserver 的入口。

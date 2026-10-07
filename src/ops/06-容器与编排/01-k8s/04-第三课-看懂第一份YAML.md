@@ -97,6 +97,18 @@ spec:
         - containerPort: 80
 ```
 
+在线阅读时，请把这份完整 YAML 保存为：
+
+```text
+labs/02-第一个应用/01-nginx-pod.yaml
+```
+
+如果目录不存在，先执行：
+
+```bash
+mkdir -p labs/02-第一个应用
+```
+
 先不看细节，只看最左边没有缩进的内容：
 
 ```text

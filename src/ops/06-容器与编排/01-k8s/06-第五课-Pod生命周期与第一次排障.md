@@ -89,6 +89,27 @@ Running 不等于网页一定正确
 cd /Users/qintianpeng/2026/code/k8s
 ```
 
+正常 Pod 文件为 `labs/02-第一个应用/01-nginx-pod.yaml`。在线阅读时，请先保存下面的完整内容：
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qingyun-mall-web-preview
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.27
+      ports:
+        - containerPort: 80
+```
+
+如果目录不存在，先执行：
+
+```bash
+mkdir -p labs/02-第一个应用
+```
+
 创建正常 Nginx Pod：
 
 ```bash
@@ -143,6 +164,18 @@ spec:
   containers:
     - name: web
       image: nginx:lesson-version-does-not-exist
+```
+
+在线阅读时，请把上面的完整内容保存为：
+
+```text
+labs/04-Pod生命周期/01-错误镜像Pod.yaml
+```
+
+如果目录不存在，先执行：
+
+```bash
+mkdir -p labs/04-Pod生命周期
 ```
 
 问题在这里：

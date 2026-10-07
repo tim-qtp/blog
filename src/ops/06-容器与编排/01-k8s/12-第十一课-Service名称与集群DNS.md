@@ -70,6 +70,60 @@ Service
 cd /Users/qintianpeng/2026/code/k8s
 ```
 
+商城前台文件为 `labs/09-Service与DNS/01-商城前台.yaml`。在线阅读时，请先保存下面的完整内容：
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qingyun-mall-web
+  labels:
+    app: qingyun-mall
+    tier: frontend
+    environment: development
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: qingyun-mall
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: qingyun-mall
+        tier: frontend
+        environment: development
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qingyun-mall-web
+  labels:
+    app: qingyun-mall
+    tier: frontend
+    environment: development
+spec:
+  selector:
+    app: qingyun-mall
+    tier: frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+```
+
+如果目录不存在，先执行：
+
+```bash
+mkdir -p labs/09-Service与DNS
+```
+
 创建 Deployment 和 Service：
 
 ```bash
@@ -136,6 +190,28 @@ curl http://qingyun-mall-web
 ```
 
 ## 六、创建集群内调试客户端
+
+客户端文件为 `labs/09-Service与DNS/02-集群内客户端.yaml`。请保存下面的完整内容：
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mall-debug-client
+  labels:
+    app: qingyun-mall
+    role: debug-client
+    environment: development
+spec:
+  containers:
+    - name: toolbox
+      image: busybox:1.36.1
+      command:
+        - sh
+        - -c
+        - sleep 3600
+  restartPolicy: Never
+```
 
 执行：
 

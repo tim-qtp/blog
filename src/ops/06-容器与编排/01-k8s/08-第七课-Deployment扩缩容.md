@@ -43,7 +43,44 @@ Deployment 管理链自动增加或减少 Pod
 cd /Users/qintianpeng/2026/code/k8s
 ```
 
-应用上一课的 Deployment 文件：
+本课使用 `labs/05-Deployment/01-nginx-deployment.yaml`。在线阅读时，请先保存下面的完整内容：
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qingyun-mall-web
+  labels:
+    app: qingyun-mall
+    tier: frontend
+    environment: development
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: qingyun-mall
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: qingyun-mall
+        tier: frontend
+        environment: development
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+```
+
+如果目录不存在，先执行：
+
+```bash
+mkdir -p labs/05-Deployment
+```
+
+应用 Deployment 文件：
 
 ```bash
 kubectl apply -f labs/05-Deployment/01-nginx-deployment.yaml

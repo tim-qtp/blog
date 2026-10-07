@@ -81,7 +81,56 @@ ConfigMap qingyun-mall-web-config
 Deployment qingyun-mall-web
 ```
 
-关键连接点是：
+在线阅读时，请把下面的完整内容保存为 `labs/11-ConfigMap/01-商城前台配置.yaml`：
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: qingyun-mall-web-config
+  labels:
+    app: qingyun-mall
+    tier: frontend
+data:
+  MALL_TITLE: 青云商城-开发环境
+  API_BASE_URL: http://product-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qingyun-mall-web
+  labels:
+    app: qingyun-mall
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qingyun-mall
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: qingyun-mall
+        tier: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          envFrom:
+            - configMapRef:
+                name: qingyun-mall-web-config
+          ports:
+            - containerPort: 80
+```
+
+如果目录不存在，先执行：
+
+```bash
+mkdir -p labs/11-ConfigMap
+```
+
+其中关键连接点是：
 
 ```yaml
 envFrom:

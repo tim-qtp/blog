@@ -65,6 +65,18 @@ spec:
       command: ["sh", "-c", "sleep 3600"]
 ```
 
+在线阅读时，请把上面的完整 YAML 保存为：
+
+```text
+labs/03-Pod与容器/01-双容器Pod.yaml
+```
+
+如果目录不存在，先执行：
+
+```bash
+mkdir -p labs/03-Pod与容器
+```
+
 重点看 `containers` 下面有两个短横线：
 
 ```text

@@ -72,6 +72,43 @@ Service：创建成功
 cd /Users/qintianpeng/2026/code/k8s
 ```
 
+Deployment 文件为 `labs/08-Service排障/01-nginx-deployment.yaml`。在线阅读时，请先保存下面的完整内容：
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qingyun-mall-web
+  labels:
+    app: qingyun-mall
+    tier: frontend
+    environment: development
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: qingyun-mall
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: qingyun-mall
+        tier: frontend
+        environment: development
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+```
+
+如果目录不存在，先执行：
+
+```bash
+mkdir -p labs/08-Service排障
+```
+
 创建 Deployment：
 
 ```bash
@@ -120,16 +157,28 @@ app=qingyun-mall,tier=frontend,environment=development
 
 错误文件：`labs/08-Service排障/02-错误选择器-service.yaml`
 
-关键内容：
+完整内容如下，其中错误点是 `tier: backend`：
 
 ```yaml
+apiVersion: v1
+kind: Service
 metadata:
   name: qingyun-mall-web
+  labels:
+    app: qingyun-mall
+    tier: frontend
+    environment: development
 spec:
   selector:
     app: qingyun-mall
     tier: backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
 ```
+
+请把它保存到上面给出的错误文件路径。
 
 创建：
 
@@ -299,13 +348,28 @@ kubectl get pods -l 'app=qingyun-mall,tier=frontend'
 
 正确文件：`labs/08-Service排障/03-正确选择器-service.yaml`
 
-正确 selector：
+完整的正确文件如下：
 
 ```yaml
-selector:
-  app: qingyun-mall
-  tier: frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: qingyun-mall-web
+  labels:
+    app: qingyun-mall
+    tier: frontend
+    environment: development
+spec:
+  selector:
+    app: qingyun-mall
+    tier: frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
 ```
+
+请把它保存到上面给出的正确文件路径。
 
 应用修复：
 

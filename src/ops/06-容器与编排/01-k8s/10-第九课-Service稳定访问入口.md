@@ -72,6 +72,43 @@ Pod 被替换后，Service 后面的 Pod 清单会更新，而调用方继续访
 
 Deployment 文件：`labs/07-Service/01-nginx-deployment.yaml`
 
+在线阅读时，请先保存下面的完整 YAML：
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qingyun-mall-web
+  labels:
+    app: qingyun-mall
+    tier: frontend
+    environment: development
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: qingyun-mall
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: qingyun-mall
+        tier: frontend
+        environment: development
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+```
+
+如果目录不存在，先执行：
+
+```bash
+mkdir -p labs/07-Service
+```
+
 它会创建两个带相同 Label 的 Nginx Pod：
 
 ```yaml
@@ -120,13 +157,22 @@ metadata:
   name: qingyun-mall-web
   labels:
     app: qingyun-mall
+    tier: frontend
+    environment: development
 spec:
   selector:
     app: qingyun-mall
+    tier: frontend
   ports:
     - name: http
       port: 80
       targetPort: 80
+```
+
+在线阅读时，请把上面的完整 YAML 保存为：
+
+```text
+labs/07-Service/02-nginx-service.yaml
 ```
 
 创建：

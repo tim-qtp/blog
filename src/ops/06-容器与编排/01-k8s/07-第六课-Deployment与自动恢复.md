@@ -78,21 +78,38 @@ metadata:
   name: qingyun-mall-web
   labels:
     app: qingyun-mall
+    tier: frontend
+    environment: development
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: qingyun-mall
+      tier: frontend
   template:
     metadata:
       labels:
         app: qingyun-mall
+        tier: frontend
+        environment: development
     spec:
       containers:
         - name: nginx
           image: nginx:1.27
           ports:
             - containerPort: 80
+```
+
+在线阅读时，请把上面的完整 YAML 保存为：
+
+```text
+labs/05-Deployment/01-nginx-deployment.yaml
+```
+
+如果目录不存在，先执行：
+
+```bash
+mkdir -p labs/05-Deployment
 ```
 
 这一课只理解三个新增部分。

@@ -51,11 +51,127 @@ Namespace 是 Kubernetes 中资源名称的一部分：
 
 ## 三、创建两个环境
 
+Namespace 文件为 `labs/10-Namespace/01-开发与测试环境.yaml`。在线阅读时，请先保存下面的完整内容：
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: qingyun-mall-dev
+  labels:
+    project: qingyun-mall
+    environment: development
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: qingyun-mall-test
+  labels:
+    project: qingyun-mall
+    environment: testing
+```
+
+如果目录不存在，先执行：
+
+```bash
+mkdir -p labs/10-Namespace
+```
+
 先创建两个 Namespace：
 
 ```bash
 cd /Users/qintianpeng/2026/code/k8s
 kubectl apply -f labs/10-Namespace/01-开发与测试环境.yaml
+```
+
+两个环境的应用文件为 `labs/10-Namespace/02-两个环境的商城前台.yaml`。请保存下面的完整内容：
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qingyun-mall-web
+  namespace: qingyun-mall-dev
+  labels:
+    app: qingyun-mall
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qingyun-mall
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: qingyun-mall
+        tier: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qingyun-mall-web
+  namespace: qingyun-mall-dev
+  labels:
+    app: qingyun-mall
+    tier: frontend
+spec:
+  selector:
+    app: qingyun-mall
+    tier: frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qingyun-mall-web
+  namespace: qingyun-mall-test
+  labels:
+    app: qingyun-mall
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qingyun-mall
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: qingyun-mall
+        tier: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qingyun-mall-web
+  namespace: qingyun-mall-test
+  labels:
+    app: qingyun-mall
+    tier: frontend
+spec:
+  selector:
+    app: qingyun-mall
+    tier: frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
 ```
 
 再把两个同名的商城前台分别部署进去：
@@ -169,6 +285,28 @@ kubectl get pods -A -l app=qingyun-mall
 输出多出一列 `NAMESPACE`，可以同时看见开发环境和测试环境的 Pod。
 
 ## 八、结合上一课理解 DNS
+
+开发环境客户端文件为 `labs/10-Namespace/03-开发环境客户端.yaml`。请保存下面的完整内容：
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mall-debug-client
+  namespace: qingyun-mall-dev
+  labels:
+    app: qingyun-mall
+    role: debug-client
+spec:
+  containers:
+    - name: toolbox
+      image: busybox:1.36.1
+      command:
+        - sh
+        - -c
+        - sleep 3600
+  restartPolicy: Never
+```
 
 创建位于开发环境的调试客户端：
 
